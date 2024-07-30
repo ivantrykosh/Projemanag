@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFC04CFD</color>
+    <color name="colorPrimaryDark">#FF5E2BFF</color>
+    <color name="colorAccent">#FFCCDBDC</color>
+    <color name="colorOnPrimary">#FF8F3CFE</color>
+    
+    <color name="primary_text_color">#FF363A43</color>
+    <color name="secondary_text_color">#FF7A8089</color>
+
+    <color name="colorOnVariant">#FF8F3CFE</color>
+    
+    <color name="colorSecondary">#FF9AD1D4</color>
+
+<!--     80CED7 C694ED 8DD0D6 B3D6D8-->
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <color name="snackbar_error_color">#FFF72400</color>
+    <color name="divider_color">#FFEAEAEA</color>
+
+    <color name="task_list_action_color">#F7F6FA</color>
+    <color name="task_list_title_view_bg_color">#F8F8F8</color>
+</resources>
