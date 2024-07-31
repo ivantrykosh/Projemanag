@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.adapters.MemberListItemsAdapter
-import com.ivantrykosh.udemy_course.android14.projemanag.model.User
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 
 abstract class MembersListDialog(
     context: Context,

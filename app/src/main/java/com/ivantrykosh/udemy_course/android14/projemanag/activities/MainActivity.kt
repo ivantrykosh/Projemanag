@@ -20,10 +20,10 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.iid.FirebaseInstanceId
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityMainBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
-import com.ivantrykosh.udemy_course.android14.projemanag.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.adapters.BoardItemsAdapter
-import com.ivantrykosh.udemy_course.android14.projemanag.model.Board
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 
 
@@ -69,7 +69,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
         binding.appBarMain.fabCreateBoard.setOnClickListener {
             val intent = Intent(this, CreateBoardActivity::class.java)
-            intent.putExtra(Constants.NAME, mUsername)
+            intent.putExtra(com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.NAME, mUsername)
             startActivityForResult(intent, CREATE_BOARD_REQUEST_CODE)
         }
     }
@@ -87,7 +87,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             adapter.setOnClickListener(object : BoardItemsAdapter.OnClickListener {
                 override fun onClick(position: Int, model: Board) {
                     val intent = Intent(this@MainActivity, TaskListActivity::class.java)
-                    intent.putExtra(Constants.DOCUMENT_ID, model.documentId)
+                    intent.putExtra(Board.FIELDS.DOCUMENT_ID, model.documentId)
                     startActivity(intent)
                 }
             })
@@ -147,7 +147,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == MY_PROFILE_REQUEST_CODE) {
                 Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
-            } else if (resultCode == CREATE_BOARD_REQUEST_CODE) {
+            } else if (requestCode == CREATE_BOARD_REQUEST_CODE) {
                 showProgressDialog(getString(R.string.please_wait))
                 Firestore().getBoardsList({ populateBoardListToUI(it) }, { hideProgressDialog() })
             }
@@ -185,7 +185,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private fun updateFcmToken(token: String) {
         val userHashMap = HashMap<String, Any>()
-        userHashMap[Constants.FCM_TOKEN] = token
+        userHashMap[com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.FCM_TOKEN] = token
         showProgressDialog(getString(R.string.please_wait))
         Firestore().updateUserProfileData({ tokenUpdateSuccess() }, { hideProgressDialog() }, userHashMap)
     }

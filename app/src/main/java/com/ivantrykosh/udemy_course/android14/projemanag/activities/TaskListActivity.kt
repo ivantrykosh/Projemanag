@@ -3,22 +3,20 @@ package com.ivantrykosh.udemy_course.android14.projemanag.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.adapters.TaskListItemAdapter
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityTaskListBinding
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Card
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Task
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
-import com.ivantrykosh.udemy_course.android14.projemanag.model.Board
-import com.ivantrykosh.udemy_course.android14.projemanag.model.Card
-import com.ivantrykosh.udemy_course.android14.projemanag.model.Task
-import com.ivantrykosh.udemy_course.android14.projemanag.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 
 class TaskListActivity : BaseActivity() {
@@ -40,8 +38,8 @@ class TaskListActivity : BaseActivity() {
             insets
         }
         mBoardDocumentId = ""
-        if (intent.hasExtra(Constants.DOCUMENT_ID)) {
-            mBoardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID) ?: ""
+        if (intent.hasExtra(Board.FIELDS.DOCUMENT_ID)) {
+            mBoardDocumentId = intent.getStringExtra(Board.FIELDS.DOCUMENT_ID) ?: ""
         }
         showProgressDialog(getString(R.string.please_wait))
         Firestore().getBoardDetails({ boardDetails(it) }, { hideProgressDialog() }, mBoardDocumentId)

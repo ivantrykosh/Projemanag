@@ -6,12 +6,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.GridLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,12 +17,12 @@ import com.ivantrykosh.udemy_course.android14.projemanag.adapters.CardMemberList
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityCardDetailsBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.dialogs.LabelColorListDialog
 import com.ivantrykosh.udemy_course.android14.projemanag.dialogs.MembersListDialog
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Card
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.SelectedMembers
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Task
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
-import com.ivantrykosh.udemy_course.android14.projemanag.model.Board
-import com.ivantrykosh.udemy_course.android14.projemanag.model.Card
-import com.ivantrykosh.udemy_course.android14.projemanag.model.SelectedMembers
-import com.ivantrykosh.udemy_course.android14.projemanag.model.Task
-import com.ivantrykosh.udemy_course.android14.projemanag.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -113,7 +110,7 @@ class CardDetailsActivity : BaseActivity() {
     private fun alertDialogForDeleteCard(cardName: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.alert)
-        builder.setMessage(getString(R.string.confirmation_message_to_delete_card, title))
+        builder.setMessage(getString(R.string.confirmation_message_to_delete_card, cardName))
         builder.setIcon(android.R.drawable.ic_dialog_alert)
         builder.setPositiveButton(R.string.yes) { dialogInterface, which ->
             dialogInterface.dismiss()

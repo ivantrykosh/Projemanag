@@ -10,8 +10,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivitySignInBinding
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
-import com.ivantrykosh.udemy_course.android14.projemanag.model.User
 
 class SignInActivity : BaseActivity() {
     private var _binding: ActivitySignInBinding? = null

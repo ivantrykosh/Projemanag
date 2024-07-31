@@ -66,7 +66,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val sharedPreferences =
             this.getSharedPreferences(Constants.PROJEMANAG, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        editor.putString(Constants.FCM_TOKEN, token)
+        editor.putString(com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.FCM_TOKEN, token)
         editor.apply()
     }
 }

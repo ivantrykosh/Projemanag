@@ -1,4 +1,4 @@
-package com.ivantrykosh.udemy_course.android14.projemanag.model
+package com.ivantrykosh.udemy_course.android14.projemanag.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -41,5 +41,15 @@ data class User(
         override fun newArray(size: Int): Array<User?> {
             return arrayOfNulls(size)
         }
+    }
+
+    object FIELDS {
+        const val ID = "id"
+        const val NAME = "name"
+        const val EMAIL = "email"
+        const val IMAGE = "image"
+        const val MOBILE = "mobile"
+        const val FCM_TOKEN = "fcmToken"
+        const val SELECTED = "selected"
     }
 }

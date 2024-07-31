@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.activities.TaskListActivity
-import com.ivantrykosh.udemy_course.android14.projemanag.model.Card
-import com.ivantrykosh.udemy_course.android14.projemanag.model.SelectedMembers
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Card
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.SelectedMembers
 
 open class CardListItemsAdapter(
     private val context: Context,

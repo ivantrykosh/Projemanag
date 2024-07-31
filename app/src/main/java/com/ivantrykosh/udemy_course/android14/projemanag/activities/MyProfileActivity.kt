@@ -6,24 +6,19 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.provider.Settings
 import android.util.Log
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.MimeTypeFilter
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityMyProfileBinding
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
-import com.ivantrykosh.udemy_course.android14.projemanag.model.User
-import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.PICK_IMAGE_REQUEST_CODE
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.READ_STORAGE_PERMISSION_CODE
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.getFileExtension
@@ -106,13 +101,13 @@ class MyProfileActivity : BaseActivity() {
     private fun updateUserProfileData() {
         val userHashmap = HashMap<String, Any>()
         if (!mDownloadableUrl.isNullOrEmpty() && mDownloadableUrl != mUserDetails.image) {
-            userHashmap[Constants.IMAGE] = mDownloadableUrl!!
+            userHashmap[com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.IMAGE] = mDownloadableUrl!!
         }
         if (binding.etName.text.toString() != mUserDetails.name) {
-            userHashmap[Constants.NAME] = binding.etName.text.toString()
+            userHashmap[com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.NAME] = binding.etName.text.toString()
         }
         if (binding.etMobile.text.toString() != mUserDetails.mobile.toString()) {
-            userHashmap[Constants.MOBILE] = binding.etMobile.text.toString().toLong()
+            userHashmap[com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.MOBILE] = binding.etMobile.text.toString().toLong()
         }
         Firestore().updateUserProfileData({
             profileUpdateSuccess()

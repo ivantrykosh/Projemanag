@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.model.Board
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 
 open class BoardItemsAdapter(private val context: Context, private val list: MutableList<Board>):
     RecyclerView.Adapter<ViewHolder>() {

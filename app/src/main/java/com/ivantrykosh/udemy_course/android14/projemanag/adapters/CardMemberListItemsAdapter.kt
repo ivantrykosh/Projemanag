@@ -8,7 +8,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.model.SelectedMembers
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.SelectedMembers
 
 open class CardMemberListItemsAdapter(
     private val context: Context,

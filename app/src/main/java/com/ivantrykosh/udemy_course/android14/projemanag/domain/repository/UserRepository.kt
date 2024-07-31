@@ -1,6 +1,6 @@
 package com.ivantrykosh.udemy_course.android14.projemanag.domain.repository
 
-import com.ivantrykosh.udemy_course.android14.projemanag.model.User
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 
 interface UserRepository {
 

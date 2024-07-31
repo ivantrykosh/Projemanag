@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -18,8 +17,9 @@ import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityCreateBoardBinding
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
-import com.ivantrykosh.udemy_course.android14.projemanag.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 import java.io.IOException
 
@@ -44,8 +44,8 @@ class CreateBoardActivity : BaseActivity() {
             insets
         }
         setupActionBar()
-        if (intent.hasExtra(Constants.NAME)) {
-            mUsername = intent.getStringExtra(Constants.NAME) ?: ""
+        if (intent.hasExtra(User.FIELDS.NAME)) {
+            mUsername = intent.getStringExtra(User.FIELDS.NAME) ?: ""
         }
         binding.ivBoardImage.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -98,6 +98,7 @@ class CreateBoardActivity : BaseActivity() {
         assignedUsersList.add(getCurrentUserId())
 
         var board = Board(
+            "",
             binding.etBoardName.text.toString(),
             mBoardImageUrl,
             mUsername,

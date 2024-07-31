@@ -1,4 +1,4 @@
-package com.ivantrykosh.udemy_course.android14.projemanag.model
+package com.ivantrykosh.udemy_course.android14.projemanag.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -35,4 +35,9 @@ data class Task(
         }
     }
 
+    object FIELDS {
+        const val TITLE = "title"
+        const val CREATED_BY = "createdBy"
+        const val CARDS = "cards"
+    }
 }

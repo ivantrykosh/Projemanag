@@ -1,4 +1,4 @@
-package com.ivantrykosh.udemy_course.android14.projemanag.model
+package com.ivantrykosh.udemy_course.android14.projemanag.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -41,4 +41,11 @@ data class Card(
         }
     }
 
+    object FIELDS {
+        const val NAME = "name"
+        const val CREATED_BY = "createdBy"
+        const val ASSIGNED_TO = "assignedTo"
+        const val LABEL_COLOR = "labelColor"
+        const val DUE_DATE = "dueDate"
+    }
 }
