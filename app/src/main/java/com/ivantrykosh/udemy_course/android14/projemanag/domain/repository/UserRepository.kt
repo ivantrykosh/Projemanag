@@ -5,17 +5,17 @@ import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 interface UserRepository {
 
     /**
-     * Create new user
+     * Create new user (after credentials stored in Firebase Auth)
      */
     suspend fun createUser(user: User)
 
     /**
-     * Get user by user ID
+     * Get current user data
      */
-    suspend fun getUserData(userId: String): User
+    suspend fun getCurrentUserData(): User
 
     /**
-     * Update user data using HashMap that contains User field as key and data as value
+     * Update current user data using HashMap that contains User field as key and data as value
      */
-    suspend fun updateUserData(userId: String, userData: HashMap<String, Any>)
+    suspend fun updateUserData(userData: HashMap<String, Any>)
 }

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -19,15 +20,20 @@ import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityMyProfileBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.MainViewModel
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.PICK_IMAGE_REQUEST_CODE
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.READ_STORAGE_PERMISSION_CODE
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.getFileExtension
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.showImageChooser
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
+@AndroidEntryPoint
 class MyProfileActivity : BaseActivity() {
     private var _binding: ActivityMyProfileBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: MainViewModel by viewModels()
 
     private var mSelectedImageFileUri: Uri? = null
     private var mDownloadableUrl: String? = null
@@ -44,7 +50,20 @@ class MyProfileActivity : BaseActivity() {
             insets
         }
         setupActionBar()
-        Firestore().loadUserData({ setUserDataInUI(it) }) { }
+
+        viewModel.getCurrentUserData()
+        viewModel.getCurrentUserDataState.observe(this) { getUser ->
+            if (getUser.loading) {
+                showProgressDialog(getString(R.string.please_wait))
+            } else if (getUser.error.isNotEmpty()) {
+                hideProgressDialog()
+                Toast.makeText(this, getUser.error, Toast.LENGTH_SHORT).show()
+            } else {
+                hideProgressDialog()
+                setUserDataInUI(getUser.data!!)
+            }
+        }
+//        Firestore().loadUserData({ setUserDataInUI(it) }) { }
         binding.ivUserImage.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 showImageChooser(this)
