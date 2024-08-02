@@ -16,7 +16,7 @@ class Firestore {
             .await()
     }
 
-    suspend fun getUserData(userId: String): User {
+    suspend fun getUserById(userId: String): User {
         return mFirestore.collection(FirebaseCollections.USERS)
             .document(userId)
             .get()
@@ -24,10 +24,26 @@ class Firestore {
             .toObject(User::class.java)!!
     }
 
-    suspend fun updateUserData(userId: String, userData: HashMap<String, Any>) {
+    suspend fun updateUser(userId: String, userData: HashMap<String, Any>) {
         mFirestore.collection(FirebaseCollections.USERS)
             .document(userId)
             .update(userData)
             .await()
+    }
+
+    suspend fun getUserByEmail(email: String): User {
+        return mFirestore.collection(FirebaseCollections.USERS)
+            .whereEqualTo(User.FIELDS.EMAIL, email)
+            .get()
+            .await()
+            .toObjects(User::class.java)[0]
+    }
+
+    suspend fun getUsersByIds(usersIds: List<String>): List<User> {
+        return mFirestore.collection(FirebaseCollections.USERS)
+            .whereIn(User.FIELDS.EMAIL, usersIds)
+            .get()
+            .await()
+            .toObjects(User::class.java)
     }
 }

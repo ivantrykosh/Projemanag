@@ -47,7 +47,7 @@ class SignUpActivity : BaseActivity() {
         }
     }
 
-    private fun userRegisteredSuccess() {
+    private fun userRegisteredSuccess() { // todo move user to Main page instead of coming back to Intro page
         hideProgressDialog()
         Toast.makeText(this, getString(R.string.you_have_successfully_registered), Toast.LENGTH_SHORT).show()
         FirebaseAuth.getInstance().signOut()

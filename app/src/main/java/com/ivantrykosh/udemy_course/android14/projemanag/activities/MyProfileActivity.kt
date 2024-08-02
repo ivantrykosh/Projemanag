@@ -51,8 +51,8 @@ class MyProfileActivity : BaseActivity() {
         }
         setupActionBar()
 
-        viewModel.getCurrentUserData()
-        viewModel.getCurrentUserDataState.observe(this) { getUser ->
+        viewModel.getCurrentUser()
+        viewModel.getCurrentUserState.observe(this) { getUser ->
             if (getUser.loading) {
                 showProgressDialog(getString(R.string.please_wait))
             } else if (getUser.error.isNotEmpty()) {

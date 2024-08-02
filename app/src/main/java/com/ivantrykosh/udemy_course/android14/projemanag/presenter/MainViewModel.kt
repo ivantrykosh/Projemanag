@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.GetCurrentUserDataUseCase
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.user.GetCurrentUserUseCase
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -13,23 +13,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getCurrentUserDataUseCase: GetCurrentUserDataUseCase
+    private val getCurrentUserUseCase: GetCurrentUserUseCase
 ) : ViewModel() {
 
-    private val _getCurrentUserDataState = MutableLiveData(GetCurrentUserDataState())
-    val getCurrentUserDataState: LiveData<GetCurrentUserDataState> = _getCurrentUserDataState
+    private val _getCurrentUserState = MutableLiveData(GetCurrentUserState())
+    val getCurrentUserState: LiveData<GetCurrentUserState> = _getCurrentUserState
 
-    fun getCurrentUserData() {
-        getCurrentUserDataUseCase().onEach { result ->
+    fun getCurrentUser() {
+        getCurrentUserUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _getCurrentUserDataState.value = GetCurrentUserDataState(data = result.data)
+                    _getCurrentUserState.value = GetCurrentUserState(data = result.data)
                 }
                 is Resource.Error -> {
-                    _getCurrentUserDataState.value = GetCurrentUserDataState(error = result.message)
+                    _getCurrentUserState.value = GetCurrentUserState(error = result.message)
                 }
                 is Resource.Loading -> {
-                    _getCurrentUserDataState.value = GetCurrentUserDataState(loading = true)
+                    _getCurrentUserState.value = GetCurrentUserState(loading = true)
                 }
             }
         }.launchIn(viewModelScope)

@@ -1,20 +1,20 @@
-package com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case
+package com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.user
 
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.repository.UserRepository
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Resource
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetCurrentUserDataUseCase @Inject constructor(
+class GetUserByEmailUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    operator fun invoke() = flow {
+    operator fun invoke(email: String) = flow {
         try {
             emit(Resource.Loading())
-            val user = userRepository.getCurrentUserData()
+            val user = userRepository.getUserByEmail(email)
             emit(Resource.Success(user))
-        } catch (e: Exception) { // todo make exception more detailed
-            emit(Resource.Error("ERROR"))
+        } catch (e: Exception) {
+            emit(Resource.Error(e.message.toString()))
         }
     }
 }

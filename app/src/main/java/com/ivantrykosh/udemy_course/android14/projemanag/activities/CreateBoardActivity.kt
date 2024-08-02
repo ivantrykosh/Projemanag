@@ -68,7 +68,7 @@ class CreateBoardActivity : BaseActivity() {
 
     private fun uploadBoardImage() {
         showProgressDialog(getString(R.string.please_wait))
-        if (mSelectedImageFileUri != null) {
+        if (mSelectedImageFileUri != null) { // todo image loading to firebase storage must be suspended
             val sRef = FirebaseStorage.getInstance().reference.child("BOARD_IMAGE" + System.currentTimeMillis() + "." + Constants.getFileExtension(
                 mSelectedImageFileUri,
                 this

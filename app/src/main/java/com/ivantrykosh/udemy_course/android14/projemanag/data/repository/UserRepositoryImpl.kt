@@ -16,14 +16,22 @@ class UserRepositoryImpl @Inject constructor(
         firestore.createUser(user, userId)
     }
 
-    override suspend fun getCurrentUserData(): User {
+    override suspend fun getCurrentUser(): User {
         val userId = firebaseAuth.getCurrentUserId()
-        val user = firestore.getUserData(userId)
+        val user = firestore.getUserById(userId)
         return user
     }
 
-    override suspend fun updateUserData(userData: HashMap<String, Any>) {
+    override suspend fun updateUser(userData: HashMap<String, Any>) {
         val userId = firebaseAuth.getCurrentUserId()
-        firestore.updateUserData(userId, userData)
+        firestore.updateUser(userId, userData)
+    }
+
+    override suspend fun getUserByEmail(email: String): User {
+        return firestore.getUserByEmail(email)
+    }
+
+    override suspend fun getUsersByIds(userIds: List<String>): List<User> {
+        return firestore.getUsersByIds(userIds)
     }
 }
