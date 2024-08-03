@@ -1,23 +1,23 @@
-package com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase
+package com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.firestore
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
-import com.ivantrykosh.udemy_course.android14.projemanag.utils.FirebaseCollections
+import com.ivantrykosh.udemy_course.android14.projemanag.utils.FirestoreCollections
 import kotlinx.coroutines.tasks.await
 
-class Firestore {
+class FirestoreUser {
     private val mFirestore = FirebaseFirestore.getInstance()
 
     suspend fun createUser(user: User, userId: String) {
-        mFirestore.collection(FirebaseCollections.USERS)
+        mFirestore.collection(FirestoreCollections.USERS)
             .document(userId)
             .set(user, SetOptions.merge())
             .await()
     }
 
     suspend fun getUserById(userId: String): User {
-        return mFirestore.collection(FirebaseCollections.USERS)
+        return mFirestore.collection(FirestoreCollections.USERS)
             .document(userId)
             .get()
             .await()
@@ -25,14 +25,14 @@ class Firestore {
     }
 
     suspend fun updateUser(userId: String, userData: HashMap<String, Any>) {
-        mFirestore.collection(FirebaseCollections.USERS)
+        mFirestore.collection(FirestoreCollections.USERS)
             .document(userId)
             .update(userData)
             .await()
     }
 
     suspend fun getUserByEmail(email: String): User {
-        return mFirestore.collection(FirebaseCollections.USERS)
+        return mFirestore.collection(FirestoreCollections.USERS)
             .whereEqualTo(User.FIELDS.EMAIL, email)
             .get()
             .await()
@@ -40,7 +40,7 @@ class Firestore {
     }
 
     suspend fun getUsersByIds(usersIds: List<String>): List<User> {
-        return mFirestore.collection(FirebaseCollections.USERS)
+        return mFirestore.collection(FirestoreCollections.USERS)
             .whereIn(User.FIELDS.EMAIL, usersIds)
             .get()
             .await()

@@ -138,7 +138,7 @@ class MyProfileActivity : BaseActivity() {
 
     private fun uploadUserImage() {
         showProgressDialog(getString(R.string.please_wait))
-        if (mSelectedImageFileUri != null) {
+        if (mSelectedImageFileUri != null) { // todo image loading to firebase storage must be suspended
             val sRef = FirebaseStorage.getInstance().reference.child("USER_IMAGE" + System.currentTimeMillis() + "." + getFileExtension(mSelectedImageFileUri, this))
             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
                 val downloadUrl = taskSnapshot.metadata!!.reference!!.downloadUrl

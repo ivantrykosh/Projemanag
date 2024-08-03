@@ -6,14 +6,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
-import com.ivantrykosh.udemy_course.android14.projemanag.utils.FirebaseCollections
+import com.ivantrykosh.udemy_course.android14.projemanag.utils.FirestoreCollections
 
 class Firestore {
     private val mFirestore = FirebaseFirestore.getInstance()
     private val mFirebaseAuth = FirebaseAuth.getInstance()
 
     fun registerUser(userInfo: User, onSuccessListener: () -> Unit) {
-        mFirestore.collection(FirebaseCollections.USERS)
+        mFirestore.collection(FirestoreCollections.USERS)
             .document(getCurrentUserId())
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
@@ -34,7 +34,7 @@ class Firestore {
     }
 
     fun loadUserData(onSuccessListener: (User) -> Unit, onFailureListener: () -> Unit) {
-        mFirestore.collection(FirebaseCollections.USERS)
+        mFirestore.collection(FirestoreCollections.USERS)
             .document(getCurrentUserId())
             .get()
             .addOnSuccessListener { document ->
@@ -48,7 +48,7 @@ class Firestore {
     }
 
     fun updateUserProfileData(onSuccessListener: () -> Unit, onFailureListener: (String) -> Unit, userHashMap: HashMap<String, Any>) {
-        mFirestore.collection(FirebaseCollections.USERS)
+        mFirestore.collection(FirestoreCollections.USERS)
             .document(getCurrentUserId())
             .update(userHashMap)
             .addOnSuccessListener {
@@ -64,7 +64,7 @@ class Firestore {
     }
 
     fun createBoard(onSuccessListener: () -> Unit, onFailureListener: () -> Unit, boardInfo: Board) {
-        mFirestore.collection(FirebaseCollections.BOARDS)
+        mFirestore.collection(FirestoreCollections.BOARDS)
             .document()
             .set(boardInfo, SetOptions.merge())
             .addOnSuccessListener {
@@ -77,7 +77,7 @@ class Firestore {
     }
 
     fun getBoardsList(onSuccessListener: (List<Board>) -> Unit, onFailureListener: () -> Unit) {
-        mFirestore.collection(FirebaseCollections.BOARDS)
+        mFirestore.collection(FirestoreCollections.BOARDS)
             .whereArrayContains(com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board.FIELDS.ASSIGNED_TO, getCurrentUserId())
             .get()
             .addOnSuccessListener {
@@ -94,7 +94,7 @@ class Firestore {
     }
 
     fun getBoardDetails(onSuccessListener: (Board) -> Unit, onFailureListener: () -> Unit, documentId: String) {
-        mFirestore.collection(FirebaseCollections.BOARDS)
+        mFirestore.collection(FirestoreCollections.BOARDS)
             .document(documentId)
             .get()
             .addOnSuccessListener {
@@ -111,7 +111,7 @@ class Firestore {
         val taskListHashMap = HashMap<String, Any>()
         taskListHashMap[com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board.FIELDS.TASK_LIST] = board.taskList
         Log.e("dd", taskListHashMap.toString())
-        mFirestore.collection(FirebaseCollections.BOARDS)
+        mFirestore.collection(FirestoreCollections.BOARDS)
             .document(board.documentId)
             .update(taskListHashMap)
             .addOnSuccessListener {
@@ -123,7 +123,7 @@ class Firestore {
     }
 
     fun getAssignedMembersDetails(onSuccessListener: (List<User>) -> Unit, onFailureListener: () -> Unit, assignedTo: List<String>) {
-        mFirestore.collection(FirebaseCollections.USERS)
+        mFirestore.collection(FirestoreCollections.USERS)
             .whereIn(com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.ID, assignedTo)
             .get()
             .addOnSuccessListener { doc ->
@@ -136,7 +136,7 @@ class Firestore {
     }
 
     fun getMemberDetails(onSuccessListener: (User) -> Unit, onFailureListener: (String) -> Unit, email: String) {
-        mFirestore.collection(FirebaseCollections.USERS)
+        mFirestore.collection(FirestoreCollections.USERS)
             .whereEqualTo(com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.EMAIL, email)
             .get()
             .addOnSuccessListener { doc ->
@@ -155,7 +155,7 @@ class Firestore {
     fun assignMemberToBoard(onSuccessListener: (User) -> Unit, onFailureListener: () -> Unit, board: Board, member: User) {
         val hashMap = HashMap<String, Any>()
         hashMap[com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board.FIELDS.ASSIGNED_TO] = board.assignedTo
-        mFirestore.collection(FirebaseCollections.BOARDS)
+        mFirestore.collection(FirestoreCollections.BOARDS)
             .document(board.documentId)
             .update(hashMap)
             .addOnSuccessListener {

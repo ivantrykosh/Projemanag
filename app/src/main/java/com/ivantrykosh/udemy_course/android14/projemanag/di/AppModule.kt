@@ -1,9 +1,12 @@
 package com.ivantrykosh.udemy_course.android14.projemanag.di
 
 import com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.FirebaseAuth
-import com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.Firestore
+import com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.firestore.FirestoreBoard
+import com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.firestore.FirestoreUser
+import com.ivantrykosh.udemy_course.android14.projemanag.data.repository.BoardRepositoryImpl
 import com.ivantrykosh.udemy_course.android14.projemanag.data.repository.UserAuthRepositoryImpl
 import com.ivantrykosh.udemy_course.android14.projemanag.data.repository.UserRepositoryImpl
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.repository.BoardRepository
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.repository.UserAuthRepository
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.repository.UserRepository
 import dagger.Module
@@ -18,8 +21,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFirestoreObject(): Firestore {
-        return Firestore()
+    fun provideFirestoreUserObject(): FirestoreUser {
+        return FirestoreUser()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirestoreBoardObject(): FirestoreBoard {
+        return FirestoreBoard()
     }
 
     @Provides
@@ -30,13 +39,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(firestore: Firestore, firebaseAuth: FirebaseAuth): UserRepository {
-        return UserRepositoryImpl(firestore, firebaseAuth)
+    fun provideUserRepository(firestoreUser: FirestoreUser, firebaseAuth: FirebaseAuth): UserRepository {
+        return UserRepositoryImpl(firestoreUser, firebaseAuth)
     }
 
     @Provides
     @Singleton
     fun provideUserAuthRepository(firebaseAuth: FirebaseAuth): UserAuthRepository {
         return UserAuthRepositoryImpl(firebaseAuth)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBoardRepository(firestoreBoard: FirestoreBoard, firebaseAuth: FirebaseAuth): BoardRepository {
+        return BoardRepositoryImpl(firestoreBoard, firebaseAuth)
     }
 }
