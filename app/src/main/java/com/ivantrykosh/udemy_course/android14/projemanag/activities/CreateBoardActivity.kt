@@ -21,6 +21,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
+import com.ivantrykosh.udemy_course.android14.projemanag.utils.FirebaseStorageObjects
 import java.io.IOException
 
 class CreateBoardActivity : BaseActivity() {
@@ -68,8 +69,8 @@ class CreateBoardActivity : BaseActivity() {
 
     private fun uploadBoardImage() {
         showProgressDialog(getString(R.string.please_wait))
-        if (mSelectedImageFileUri != null) { // todo image loading to firebase storage must be suspended
-            val sRef = FirebaseStorage.getInstance().reference.child("BOARD_IMAGE" + System.currentTimeMillis() + "." + Constants.getFileExtension(
+        if (mSelectedImageFileUri != null) {
+            val sRef = FirebaseStorage.getInstance().reference.child(FirebaseStorageObjects.BOARD_IMAGE + System.currentTimeMillis() + "." + Constants.getFileExtension(
                 mSelectedImageFileUri,
                 this
             )

@@ -25,6 +25,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.PICK_IM
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.READ_STORAGE_PERMISSION_CODE
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.getFileExtension
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.showImageChooser
+import com.ivantrykosh.udemy_course.android14.projemanag.utils.FirebaseStorageObjects
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
@@ -138,8 +139,8 @@ class MyProfileActivity : BaseActivity() {
 
     private fun uploadUserImage() {
         showProgressDialog(getString(R.string.please_wait))
-        if (mSelectedImageFileUri != null) { // todo image loading to firebase storage must be suspended
-            val sRef = FirebaseStorage.getInstance().reference.child("USER_IMAGE" + System.currentTimeMillis() + "." + getFileExtension(mSelectedImageFileUri, this))
+        if (mSelectedImageFileUri != null) {
+            val sRef = FirebaseStorage.getInstance().reference.child(FirebaseStorageObjects.USER_IMAGE + System.currentTimeMillis() + "." + getFileExtension(mSelectedImageFileUri, this))
             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
                 val downloadUrl = taskSnapshot.metadata!!.reference!!.downloadUrl
                 Log.i("Firebase image url:", downloadUrl.toString())

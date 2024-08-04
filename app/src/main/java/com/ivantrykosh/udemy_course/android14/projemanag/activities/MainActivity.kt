@@ -61,7 +61,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             showProgressDialog(getString(R.string.please_wait))
             Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
         } else {
-            FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(this@MainActivity) { // todo it must be suspended
+            FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(this@MainActivity) {
                 updateFcmToken(it.token)
             }
         }
