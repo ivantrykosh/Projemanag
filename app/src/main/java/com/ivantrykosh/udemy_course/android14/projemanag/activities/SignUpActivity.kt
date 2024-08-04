@@ -1,11 +1,9 @@
 package com.ivantrykosh.udemy_course.android14.projemanag.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
@@ -13,6 +11,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivitySignUpBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 
 class SignUpActivity : BaseActivity() {
     private var _binding: ActivitySignUpBinding? = null
@@ -60,7 +59,7 @@ class SignUpActivity : BaseActivity() {
         val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
 
         if (validateForm(name, email, password)) {
-            showProgressDialog(getString(R.string.please_wait))
+            showProgressDialog()
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val firebaseUser = task.result!!.user!!

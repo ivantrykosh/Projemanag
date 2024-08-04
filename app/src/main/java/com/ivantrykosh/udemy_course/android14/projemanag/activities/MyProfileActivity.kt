@@ -20,7 +20,8 @@ import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityMyProfileBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
-import com.ivantrykosh.udemy_course.android14.projemanag.presenter.MainViewModel
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseViewModel
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.PICK_IMAGE_REQUEST_CODE
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.READ_STORAGE_PERMISSION_CODE
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants.getFileExtension
@@ -34,7 +35,7 @@ class MyProfileActivity : BaseActivity() {
     private var _binding: ActivityMyProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: BaseViewModel by viewModels()
 
     private var mSelectedImageFileUri: Uri? = null
     private var mDownloadableUrl: String? = null
@@ -55,7 +56,7 @@ class MyProfileActivity : BaseActivity() {
         viewModel.getCurrentUser()
         viewModel.getCurrentUserState.observe(this) { getUser ->
             if (getUser.loading) {
-                showProgressDialog(getString(R.string.please_wait))
+                showProgressDialog()
             } else if (getUser.error.isNotEmpty()) {
                 hideProgressDialog()
                 Toast.makeText(this, getUser.error, Toast.LENGTH_SHORT).show()
@@ -76,7 +77,7 @@ class MyProfileActivity : BaseActivity() {
             if (mSelectedImageFileUri != null) {
                 uploadUserImage()
             } else {
-                showProgressDialog(getString(R.string.please_wait))
+                showProgressDialog()
             }
         }
     }
@@ -138,7 +139,7 @@ class MyProfileActivity : BaseActivity() {
     }
 
     private fun uploadUserImage() {
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         if (mSelectedImageFileUri != null) {
             val sRef = FirebaseStorage.getInstance().reference.child(FirebaseStorageObjects.USER_IMAGE + System.currentTimeMillis() + "." + getFileExtension(mSelectedImageFileUri, this))
             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->

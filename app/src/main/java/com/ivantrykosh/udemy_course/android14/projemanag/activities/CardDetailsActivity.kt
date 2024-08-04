@@ -23,6 +23,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.SelectedMe
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Task
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -130,7 +131,7 @@ class CardDetailsActivity : BaseActivity() {
         val taskList = mBoardDetails.taskList
         taskList.removeLast()
         taskList[mTaskListPosition].cards = cardsList
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().addUpdateTaskList({ addUpdateTaskListListener() }, { hideProgressDialog() }, mBoardDetails)
     }
 
@@ -244,7 +245,7 @@ class CardDetailsActivity : BaseActivity() {
         val taskList: ArrayList<Task> = mBoardDetails.taskList
         taskList.removeLast()
         mBoardDetails.taskList[mTaskListPosition].cards[mCardListPosition] = card
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().addUpdateTaskList({ addUpdateTaskListListener() }, { hideProgressDialog() }, mBoardDetails)
     }
 

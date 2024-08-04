@@ -20,6 +20,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityCre
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.FirebaseStorageObjects
 import java.io.IOException
@@ -61,14 +62,14 @@ class CreateBoardActivity : BaseActivity() {
             if (mSelectedImageFileUri != null) {
                 uploadBoardImage()
             } else {
-                showProgressDialog(getString(R.string.please_wait))
+                showProgressDialog()
                 createBoard()
             }
         }
     }
 
     private fun uploadBoardImage() {
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         if (mSelectedImageFileUri != null) {
             val sRef = FirebaseStorage.getInstance().reference.child(FirebaseStorageObjects.BOARD_IMAGE + System.currentTimeMillis() + "." + Constants.getFileExtension(
                 mSelectedImageFileUri,
@@ -96,7 +97,7 @@ class CreateBoardActivity : BaseActivity() {
 
     private fun createBoard() {
         val assignedUsersList: MutableList<String> = mutableListOf()
-        assignedUsersList.add(getCurrentUserId())
+        assignedUsersList.add(Firestore().getCurrentUserId())
 
         var board = Board(
             "",

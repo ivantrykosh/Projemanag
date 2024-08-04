@@ -5,7 +5,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 import com.ivantrykosh.udemy_course.android14.projemanag.BuildConfig
-import com.ivantrykosh.udemy_course.android14.projemanag.activities.BaseActivity
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 
 object Constants {
     const val FCM_TOKEN_UPDATED = "fcm_token_updated"

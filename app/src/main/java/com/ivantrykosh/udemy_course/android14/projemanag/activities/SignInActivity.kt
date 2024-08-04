@@ -12,6 +12,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivitySignInBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 
 class SignInActivity : BaseActivity() {
     private var _binding: ActivitySignInBinding? = null
@@ -39,7 +40,7 @@ class SignInActivity : BaseActivity() {
         val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
 
         if (validateForm(email, password)) {
-            showProgressDialog(getString(R.string.please_wait))
+            showProgressDialog()
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Firestore().loadUserData({ signInSuccess(it) }) { hideProgressDialog() }

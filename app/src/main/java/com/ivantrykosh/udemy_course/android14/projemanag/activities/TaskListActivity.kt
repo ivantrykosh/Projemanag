@@ -17,6 +17,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Card
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Task
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 
 class TaskListActivity : BaseActivity() {
@@ -41,7 +42,7 @@ class TaskListActivity : BaseActivity() {
         if (intent.hasExtra(Board.FIELDS.DOCUMENT_ID)) {
             mBoardDocumentId = intent.getStringExtra(Board.FIELDS.DOCUMENT_ID) ?: ""
         }
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().getBoardDetails({ boardDetails(it) }, { hideProgressDialog() }, mBoardDocumentId)
     }
 
@@ -61,7 +62,7 @@ class TaskListActivity : BaseActivity() {
     fun updateCardsInTaskList(taskListPosition: Int, cards: ArrayList<Card>) {
         mBoardDetails.taskList.removeLast()
         mBoardDetails.taskList[taskListPosition].cards = cards
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().addUpdateTaskList({ addUpdateTaskListSuccess() }, { hideProgressDialog() }, mBoardDetails)
     }
 
@@ -69,10 +70,10 @@ class TaskListActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == MEMBERS_REQUEST_CODE) {
-                showProgressDialog(getString(R.string.please_wait))
+                showProgressDialog()
                 Firestore().getBoardDetails({ boardDetails(it) }, { hideProgressDialog() }, mBoardDocumentId)
             } else if (resultCode == CARD_DETAILS_REQUEST_CODE) {
-                showProgressDialog(getString(R.string.please_wait))
+                showProgressDialog()
                 Firestore().getBoardDetails({ boardDetails(it) }, { hideProgressDialog() }, mBoardDocumentId)
             }
         }
@@ -123,7 +124,7 @@ class TaskListActivity : BaseActivity() {
         val task = Task(listName, model.createdBy)
         mBoardDetails.taskList[position] = task
         mBoardDetails.taskList.removeLast()
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().addUpdateTaskList({ addUpdateTaskListSuccess() }, { hideProgressDialog() }, mBoardDetails)
     }
 
@@ -140,7 +141,7 @@ class TaskListActivity : BaseActivity() {
             cardList
         )
         mBoardDetails.taskList[position] = task
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().addUpdateTaskList({ addUpdateTaskListSuccess() }, { hideProgressDialog() }, mBoardDetails)
     }
 
@@ -149,7 +150,7 @@ class TaskListActivity : BaseActivity() {
         hideProgressDialog()
         setupActionBar()
 
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().getAssignedMembersDetails( { boardMembersDetailsList(ArrayList(it)) }, { hideProgressDialog() }, mBoardDetails.assignedTo)
     }
 
@@ -158,7 +159,7 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList.add(0, task)
         mBoardDetails.taskList.removeLast()
 
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().addUpdateTaskList({ addUpdateTaskListSuccess() }, { hideProgressDialog() }, mBoardDetails)
     }
 
@@ -166,7 +167,7 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList.removeAt(position)
         mBoardDetails.taskList.removeLast()
 
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().addUpdateTaskList({ addUpdateTaskListSuccess() }, { hideProgressDialog() }, mBoardDetails)
     }
 

@@ -20,6 +20,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityMem
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -51,7 +52,7 @@ class MembersActivity : BaseActivity() {
         setupActionBar()
         if (intent.hasExtra(Constants.BOARD_DETAIL)) {
             mBoardDetails = intent.getParcelableExtra(Constants.BOARD_DETAIL)!!
-            showProgressDialog(getString(R.string.please_wait))
+            showProgressDialog()
             Firestore().getAssignedMembersDetails({ setupMembersList(it) }, { hideProgressDialog() }, mBoardDetails.assignedTo)
         }
         onBackPressedDispatcher.addCallback {
@@ -107,7 +108,7 @@ class MembersActivity : BaseActivity() {
             val email = dialog.findViewById<EditText>(R.id.et_email_search_member).text.toString()
             if (email.isNotEmpty()) {
                 dialog.dismiss()
-                showProgressDialog(getString(R.string.please_wait))
+                showProgressDialog()
                 Firestore().getMemberDetails({ memberDetails(it) }, { hideProgressDialog(); showErrorSnackBar(it) }, email)
             } else {
                 Toast.makeText(this@MembersActivity, R.string.please_enter_email, Toast.LENGTH_SHORT).show()
@@ -195,7 +196,7 @@ class MembersActivity : BaseActivity() {
 
         override fun onPreExecute() {
             super.onPreExecute()
-            showProgressDialog(getString(R.string.please_wait))
+            showProgressDialog()
         }
 
         override fun onPostExecute(result: String?) {

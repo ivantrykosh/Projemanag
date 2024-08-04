@@ -24,6 +24,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.adapters.BoardItemsAdapter
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 
 
@@ -58,7 +59,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         mSharedPreferences = getSharedPreferences(Constants.PROJEMANAG, Context.MODE_PRIVATE)
         val tokenUpdated = mSharedPreferences.getBoolean(Constants.FCM_TOKEN_UPDATED, false)
         if (tokenUpdated) {
-            showProgressDialog(getString(R.string.please_wait))
+            showProgressDialog()
             Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
         } else {
             FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(this@MainActivity) {
@@ -109,7 +110,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         binding.drawerLayout.findViewById<TextView>(R.id.tv_username).text = user.name
 
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().getBoardsList({ populateBoardListToUI(it) }, { hideProgressDialog() })
     }
 
@@ -148,7 +149,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             if (requestCode == MY_PROFILE_REQUEST_CODE) {
                 Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
             } else if (requestCode == CREATE_BOARD_REQUEST_CODE) {
-                showProgressDialog(getString(R.string.please_wait))
+                showProgressDialog()
                 Firestore().getBoardsList({ populateBoardListToUI(it) }, { hideProgressDialog() })
             }
         } else {
@@ -179,14 +180,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val editor = mSharedPreferences.edit()
         editor.putBoolean(Constants.FCM_TOKEN_UPDATED, true)
         editor.apply()
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
     }
 
     private fun updateFcmToken(token: String) {
         val userHashMap = HashMap<String, Any>()
         userHashMap[com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.FCM_TOKEN] = token
-        showProgressDialog(getString(R.string.please_wait))
+        showProgressDialog()
         Firestore().updateUserProfileData({ tokenUpdateSuccess() }, { hideProgressDialog() }, userHashMap)
     }
 }

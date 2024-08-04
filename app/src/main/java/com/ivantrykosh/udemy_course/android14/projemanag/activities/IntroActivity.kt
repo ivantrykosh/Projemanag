@@ -4,10 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityIntroBinding
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 
 class IntroActivity : BaseActivity() {
     private var _binding: ActivityIntroBinding? = null

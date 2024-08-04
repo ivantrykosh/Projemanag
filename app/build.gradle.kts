@@ -67,19 +67,26 @@ dependencies {
 
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
-    implementation("com.github.bumptech.glide:glide:4.11.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
+    val glide_version = "4.11.0"
+    implementation("com.github.bumptech.glide:glide:$glide_version")
+    annotationProcessor("com.github.bumptech.glide:compiler:$glide_version")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2")
+    val coroutines_version = "1.5.2"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutines_version")
 
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
+    val dagger_hilt_version = "2.48"
+    implementation("com.google.dagger:hilt-android:$dagger_hilt_version")
+    kapt("com.google.dagger:hilt-android-compiler:$dagger_hilt_version")
 
     val lifecycle_version = "2.8.4"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
+
+    val nav_version = "2.7.7"
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 }
 
 kapt {
