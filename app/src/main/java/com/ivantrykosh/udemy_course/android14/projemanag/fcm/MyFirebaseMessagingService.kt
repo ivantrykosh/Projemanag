@@ -15,6 +15,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.activities.MainActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.activities.SignInActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
+import com.ivantrykosh.udemy_course.android14.projemanag.utils.AppPreferences
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -63,10 +64,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendRegistrationToServer(token: String?) {
-        val sharedPreferences =
-            this.getSharedPreferences(Constants.PROJEMANAG, Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        editor.putString(com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.FCM_TOKEN, token)
-        editor.apply()
+        AppPreferences.setup(this)
+        AppPreferences.fcmToken = token
     }
 }

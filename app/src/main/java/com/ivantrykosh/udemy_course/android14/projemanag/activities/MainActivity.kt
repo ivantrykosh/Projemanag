@@ -25,6 +25,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.adapters.BoardItemsAdap
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
+import com.ivantrykosh.udemy_course.android14.projemanag.utils.AppPreferences
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 
 
@@ -33,7 +34,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private val binding get() = _binding!!
 
     private lateinit var mUsername: String
-    private lateinit var mSharedPreferences: SharedPreferences
 
     companion object {
         private const val MY_PROFILE_REQUEST_CODE = 11
@@ -56,8 +56,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
         binding.navView.setNavigationItemSelectedListener(this)
 
-        mSharedPreferences = getSharedPreferences(Constants.PROJEMANAG, Context.MODE_PRIVATE)
-        val tokenUpdated = mSharedPreferences.getBoolean(Constants.FCM_TOKEN_UPDATED, false)
+        val tokenUpdated = AppPreferences.fcmTokenUpdated ?: false
         if (tokenUpdated) {
             showProgressDialog()
             Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
@@ -164,7 +163,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
             R.id.nav_sign_out -> {
                 Firestore().signOut()
-                mSharedPreferences.edit().clear().apply()
+                AppPreferences.clear()
                 val intent = Intent(this, IntroActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
@@ -177,9 +176,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private fun tokenUpdateSuccess() {
         hideProgressDialog()
-        val editor = mSharedPreferences.edit()
-        editor.putBoolean(Constants.FCM_TOKEN_UPDATED, true)
-        editor.apply()
+        AppPreferences.fcmTokenUpdated = true
         showProgressDialog()
         Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
     }
