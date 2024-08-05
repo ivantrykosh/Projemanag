@@ -25,6 +25,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.adapters.BoardItemsAdap
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.auth.AuthActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.AppPreferences
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 
@@ -164,7 +165,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.nav_sign_out -> {
                 Firestore().signOut()
                 AppPreferences.clear()
-                val intent = Intent(this, IntroActivity::class.java)
+                val intent = Intent(this, AuthActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()

@@ -7,12 +7,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/ic_background"
     android:orientation="vertical"
-    tools:context=".activities.SignUpActivity">
+    tools:context=".presenter.auth.sign_up.SignUpFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_sign_up_activity"
+        android:id="@+id/toolbar_sign_up"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_black_color_back_24dp">
 
         <TextView
             android:id="@+id/tv_title"

@@ -3,22 +3,21 @@ package com.ivantrykosh.udemy_course.android14.projemanag.presenter.splash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.ivantrykosh.udemy_course.android14.projemanag.activities.IntroActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.activities.MainActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivitySplashBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseViewModel
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.auth.AuthActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity() {
 
@@ -43,9 +42,10 @@ class SplashActivity : BaseActivity() {
         binding.tvAppName.typeface = typeface
 
         Handler(Looper.getMainLooper()).postDelayed({
+            baseViewModel.getCurrentUserId()
             baseViewModel.getCurrentUserIdState.observe(this) { state ->
                 when {
-                    state.loading -> {}
+                    state.loading -> { }
                     state.error.isNotEmpty() -> showErrorSnackBar(state.error)
                     else -> {
                         val userLoggedIn = state.data!!.isNotEmpty()
@@ -56,23 +56,11 @@ class SplashActivity : BaseActivity() {
         }, 2500)
     }
 
-    private fun hideStatusBar() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-    }
-
     private fun launchActivity(userLoggedIn: Boolean) {
         if (userLoggedIn) {
             startActivity(Intent(this, MainActivity::class.java))
         } else {
-            startActivity(Intent(this, IntroActivity::class.java))
+            startActivity(Intent(this, AuthActivity::class.java))
         }
         finish()
     }

@@ -1,8 +1,11 @@
 package com.ivantrykosh.udemy_course.android14.projemanag.presenter
 
 import android.app.Dialog
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -41,5 +44,17 @@ open class BaseActivity : AppCompatActivity() {
         val snackBarView = snackBar.view
         snackBarView.setBackgroundColor(getColor(R.color.snackbar_error_color))
         snackBar.show()
+    }
+
+    fun hideStatusBar() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
     }
 }

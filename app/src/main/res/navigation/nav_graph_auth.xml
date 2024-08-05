@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_auth"
+    app:startDestination="@id/auth_intro">
+
+    <fragment
+        android:id="@+id/auth_intro"
+        android:name="com.ivantrykosh.udemy_course.android14.projemanag.presenter.auth.IntroFragment"
+        tools:layout="@layout/fragment_intro">
+
+        <action
+            android:id="@+id/action_intro_to_sign_in"
+            app:destination="@id/auth_sign_in" />
+
+        <action
+            android:id="@+id/action_intro_to_sign_up"
+            app:destination="@id/auth_sign_up" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/auth_sign_in"
+        android:name="com.ivantrykosh.udemy_course.android14.projemanag.presenter.auth.sign_in.SignInFragment"
+        tools:layout="@layout/fragment_sign_in" />
+
+    <fragment
+        android:id="@+id/auth_sign_up"
+        android:name="com.ivantrykosh.udemy_course.android14.projemanag.presenter.auth.sign_up.SignUpFragment"
+        tools:layout="@layout/fragment_sign_up" />
+</navigation>

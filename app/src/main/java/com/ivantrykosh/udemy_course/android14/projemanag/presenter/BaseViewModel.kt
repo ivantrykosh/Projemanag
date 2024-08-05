@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class BaseViewModel @Inject constructor(
+open class BaseViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val getCurrentUserIdUseCase: GetCurrentUserIdUseCase,
 ) : ViewModel() {
@@ -26,6 +26,7 @@ class BaseViewModel @Inject constructor(
     val getCurrentUserIdState: LiveData<State<String>> = _getCurrentUserIdState
 
     fun getCurrentUser() {
+        _getCurrentUserState.value = State(loading = true)
         getCurrentUserUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
@@ -42,10 +43,11 @@ class BaseViewModel @Inject constructor(
     }
 
     fun getCurrentUserId() {
+        _getCurrentUserIdState.value = State(loading = true)
         getCurrentUserIdUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _getCurrentUserIdState.value = State(data = result.data)
+                    _getCurrentUserIdState.value = State(data = result.data ?: "")
                 }
                 is Resource.Error -> {
                     _getCurrentUserIdState.value = State(error = result.message)
