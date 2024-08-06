@@ -19,6 +19,9 @@
         android:theme="@style/Base.Theme.Projemanag"
         tools:targetApi="31">
         <activity
+            android:name=".presenter.main.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".presenter.auth.AuthActivity"
             android:exported="false" />
 
@@ -71,7 +74,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.Main_Activity"
             android:exported="false"
             android:screenOrientation="portrait" />
 

@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.activities.MainActivity
+import com.ivantrykosh.udemy_course.android14.projemanag.activities.Main_Activity
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.auth.AuthActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.AppPreferences
@@ -40,7 +40,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun sendNotification(title:String, message: String) {
         val intent = if (Firestore().getCurrentUserId().isNotEmpty())
-            Intent(this, MainActivity::class.java)
+            Intent(this, Main_Activity::class.java)
         else
             Intent(this, AuthActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)

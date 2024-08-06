@@ -15,9 +15,9 @@ interface UserRepository {
     suspend fun getCurrentUser(): User
 
     /**
-     * Update current user data using HashMap that contains User field as key and data as value
+     * Update current user data using Map that contains User field as key and data as value
      */
-    suspend fun updateUser(userData: HashMap<String, Any>)
+    suspend fun updateUser(userData: Map<String, Any>)
 
     /**
      * Get user data by email

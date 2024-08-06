@@ -10,11 +10,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.ivantrykosh.udemy_course.android14.projemanag.activities.MainActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivitySplashBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseViewModel
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.auth.AuthActivity
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

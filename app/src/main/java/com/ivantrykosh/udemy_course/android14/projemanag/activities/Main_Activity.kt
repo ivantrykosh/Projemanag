@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.iid.FirebaseInstanceId
-import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityMainBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
 import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.adapters.BoardItemsAdapter
+import com.ivantrykosh.udemy_course.android14.projemanag.databinding.ActivityOldMainBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
@@ -28,8 +28,8 @@ import com.ivantrykosh.udemy_course.android14.projemanag.presenter.auth.AuthActi
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.AppPreferences
 
 
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private var _binding: ActivityMainBinding? = null
+class Main_Activity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private var _binding: ActivityOldMainBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var mUsername: String
@@ -43,7 +43,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityOldMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.drawerLayout) { v, insets ->
@@ -62,13 +62,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             showProgressDialog()
             Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
         } else {
-            FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(this@MainActivity) {
+            FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(this@Main_Activity) {
                 updateFcmToken(it.token)
             }
         }
 
         Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
-        binding.appBarMain.fabCreateBoard.setOnClickListener {
+        binding.mainContent.fabCreateBoard.setOnClickListener {
             val intent = Intent(this, CreateBoardActivity::class.java)
             intent.putExtra(User.FIELDS.NAME, mUsername)
             startActivityForResult(intent, CREATE_BOARD_REQUEST_CODE)
@@ -78,23 +78,23 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private fun populateBoardListToUI(boardList: List<Board>) {
         hideProgressDialog()
         if (boardList.isNotEmpty()) {
-            binding.appBarMain.appBarMainContent.rvBoardsList.visibility = View.VISIBLE
-            binding.appBarMain.appBarMainContent.tvNoBoardsAvailable.visibility = View.GONE
+            binding.mainContent.rvBoardsList.visibility = View.VISIBLE
+            binding.mainContent.tvNoBoardsAvailable.visibility = View.GONE
 
-            binding.appBarMain.appBarMainContent.rvBoardsList.layoutManager = LinearLayoutManager(this)
-            binding.appBarMain.appBarMainContent.rvBoardsList.setHasFixedSize(true)
+            binding.mainContent.rvBoardsList.layoutManager = LinearLayoutManager(this)
+            binding.mainContent.rvBoardsList.setHasFixedSize(true)
             val adapter = BoardItemsAdapter(this, boardList.toMutableList())
-            binding.appBarMain.appBarMainContent.rvBoardsList.adapter = adapter
+            binding.mainContent.rvBoardsList.adapter = adapter
             adapter.setOnClickListener(object : BoardItemsAdapter.OnClickListener {
                 override fun onClick(position: Int, model: Board) {
-                    val intent = Intent(this@MainActivity, TaskListActivity::class.java)
+                    val intent = Intent(this@Main_Activity, TaskListActivity::class.java)
                     intent.putExtra(Board.FIELDS.DOCUMENT_ID, model.documentId)
                     startActivity(intent)
                 }
             })
         } else {
-            binding.appBarMain.appBarMainContent.rvBoardsList.visibility = View.GONE
-            binding.appBarMain.appBarMainContent.tvNoBoardsAvailable.visibility = View.VISIBLE
+            binding.mainContent.rvBoardsList.visibility = View.GONE
+            binding.mainContent.tvNoBoardsAvailable.visibility = View.VISIBLE
         }
     }
 
@@ -132,9 +132,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private fun setupActionBar() {
-        setSupportActionBar(binding.appBarMain.toolbarMainActivity)
-        binding.appBarMain.toolbarMainActivity.setNavigationIcon(R.drawable.ic_action_navigation_main)
-        binding.appBarMain.toolbarMainActivity.setNavigationOnClickListener {
+        setSupportActionBar(binding.mainContent.toolbarMain)
+        binding.mainContent.toolbarMain.setNavigationOnClickListener {
             toggleDrawer()
         }
     }

@@ -24,7 +24,7 @@ class FirestoreUser {
             .toObject(User::class.java)!!
     }
 
-    suspend fun updateUser(userId: String, userData: HashMap<String, Any>) {
+    suspend fun updateUser(userId: String, userData: Map<String, Any>) {
         mFirestore.collection(FirestoreCollections.USERS)
             .document(userId)
             .update(userData)

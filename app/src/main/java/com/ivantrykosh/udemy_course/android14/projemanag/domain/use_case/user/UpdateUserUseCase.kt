@@ -5,10 +5,10 @@ import com.ivantrykosh.udemy_course.android14.projemanag.utils.Resource
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class UpdateUserDataUseCase @Inject constructor(
+class UpdateUserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    operator fun invoke(userData: HashMap<String, Any>) = flow<Resource<Void>> {
+    operator fun invoke(userData: Map<String, Any>) = flow<Resource<Void>> {
         try {
             emit(Resource.Loading())
             userRepository.updateUser(userData)

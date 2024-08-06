@@ -22,7 +22,7 @@ class UserRepositoryImpl @Inject constructor(
         return user
     }
 
-    override suspend fun updateUser(userData: HashMap<String, Any>) {
+    override suspend fun updateUser(userData: Map<String, Any>) {
         val userId = firebaseAuth.getCurrentUserId()
         firestoreUser.updateUser(userId, userData)
     }

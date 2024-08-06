@@ -6,8 +6,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.activities.MainActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
