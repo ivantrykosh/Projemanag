@@ -1,14 +1,13 @@
 package com.ivantrykosh.udemy_course.android14.projemanag.activities
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.GravityCompat
@@ -27,7 +26,6 @@ import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.BaseActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.auth.AuthActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.AppPreferences
-import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +33,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private val binding get() = _binding!!
 
     private lateinit var mUsername: String
+
+    private var backPressedTime: Long = 0
 
     companion object {
         private const val MY_PROFILE_REQUEST_CODE = 11
@@ -70,12 +70,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
         binding.appBarMain.fabCreateBoard.setOnClickListener {
             val intent = Intent(this, CreateBoardActivity::class.java)
-            intent.putExtra(com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.NAME, mUsername)
+            intent.putExtra(User.FIELDS.NAME, mUsername)
             startActivityForResult(intent, CREATE_BOARD_REQUEST_CODE)
         }
     }
 
-    fun populateBoardListToUI(boardList: List<Board>) {
+    private fun populateBoardListToUI(boardList: List<Board>) {
         hideProgressDialog()
         if (boardList.isNotEmpty()) {
             binding.appBarMain.appBarMainContent.rvBoardsList.visibility = View.VISIBLE
@@ -120,6 +120,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         } else {
             doubleBackToExit()
         }
+    }
+
+    private fun doubleBackToExit() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            finish()
+        } else {
+            Toast.makeText(this, getString(R.string.please_click_back_again_to_exit), Toast.LENGTH_SHORT).show()
+        }
+        backPressedTime = System.currentTimeMillis()
     }
 
     private fun setupActionBar() {
@@ -184,7 +193,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private fun updateFcmToken(token: String) {
         val userHashMap = HashMap<String, Any>()
-        userHashMap[com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User.FIELDS.FCM_TOKEN] = token
+        userHashMap[User.FIELDS.FCM_TOKEN] = token
         showProgressDialog()
         Firestore().updateUserProfileData({ tokenUpdateSuccess() }, { hideProgressDialog() }, userHashMap)
     }

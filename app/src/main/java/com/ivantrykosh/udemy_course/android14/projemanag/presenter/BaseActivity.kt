@@ -2,18 +2,14 @@ package com.ivantrykosh.udemy_course.android14.projemanag.presenter
 
 import android.app.Dialog
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.ivantrykosh.udemy_course.android14.projemanag.R
 
 open class BaseActivity : AppCompatActivity() {
-    private var doubleBackToExitPressedOnce = false
     private lateinit var mProgressDialog: Dialog
 
     fun showProgressDialog() {
@@ -25,18 +21,6 @@ open class BaseActivity : AppCompatActivity() {
 
     fun hideProgressDialog() {
         mProgressDialog.dismiss()
-    }
-
-    fun doubleBackToExit() {
-        if (doubleBackToExitPressedOnce) {
-            onBackPressedDispatcher.onBackPressed()
-            return
-        }
-        doubleBackToExitPressedOnce = true
-        Toast.makeText(this, getString(R.string.please_click_back_again_to_exit), Toast.LENGTH_SHORT).show()
-        Handler(Looper.getMainLooper()).postDelayed({
-            doubleBackToExitPressedOnce = false
-        }, 2000)
     }
 
     fun showErrorSnackBar(message: String) {
