@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ProjemanagApp"
@@ -49,11 +48,6 @@
             android:name=".activities.TaskListActivity"
             android:exported="false"
             android:label="@string/task_list"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.CreateBoardActivity"
-            android:exported="false"
-            android:label="@string/create_board_title"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.BaseActivity"

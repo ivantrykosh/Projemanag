@@ -31,6 +31,7 @@ class MainFragment : Fragment() {
     private val mainViewModel: MainViewModel by viewModels()
 
     private lateinit var mUsername: String
+    private lateinit var mUserId: String
     private var backPressedTime: Long = 0
     private lateinit var mainActivity: MainActivity
 
@@ -86,10 +87,10 @@ class MainFragment : Fragment() {
         }
 
         binding.mainContent.fabCreateBoard.setOnClickListener {
-            // todo
-//            val intent = Intent(this, CreateBoardActivity::class.java)
-//            intent.putExtra(User.FIELDS.NAME, mUsername)
-//            startActivityForResult(intent, Main_Activity.CREATE_BOARD_REQUEST_CODE)
+            val bundle = Bundle()
+            bundle.putString(User.FIELDS.ID, mUserId)
+            bundle.putString(User.FIELDS.NAME, mUsername)
+            findNavController().navigate(R.id.action_main_to_create_board, bundle)
         }
     }
 
@@ -128,6 +129,7 @@ class MainFragment : Fragment() {
     private fun updateNavigationUserDetails(user: User) {
         mainActivity.hideProgressDialog()
         mUsername = user.name
+        mUserId = user.id
         Glide
             .with(this)
             .load(user.image)

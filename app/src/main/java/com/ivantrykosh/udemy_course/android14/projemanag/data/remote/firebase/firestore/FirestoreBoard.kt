@@ -22,7 +22,11 @@ class FirestoreBoard {
             .whereArrayContains(Board.FIELDS.ASSIGNED_TO, userId)
             .get()
             .await()
-            .toObjects(Board::class.java)
+            .map {
+                val board = it.toObject(Board::class.java)
+                board.documentId = it.id
+                board
+            }
     }
 
     suspend fun getBoard(id: String): Board {
@@ -30,7 +34,11 @@ class FirestoreBoard {
             .document(id)
             .get()
             .await()
-            .toObject(Board::class.java)!!
+            .let {
+                val board = it.toObject(Board::class.java)!!
+                board.documentId = it.id
+                board
+            }
     }
 
     suspend fun updateTasks(id: String, tasks: List<Task>) {

@@ -69,9 +69,9 @@ class Main_Activity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
 
         Firestore().loadUserData({ updateNavigationUserDetails(it) }) { hideProgressDialog() }
         binding.mainContent.fabCreateBoard.setOnClickListener {
-            val intent = Intent(this, CreateBoardActivity::class.java)
-            intent.putExtra(User.FIELDS.NAME, mUsername)
-            startActivityForResult(intent, CREATE_BOARD_REQUEST_CODE)
+//            val intent = Intent(this, CreateBoardActivity::class.java)
+//            intent.putExtra(User.FIELDS.NAME, mUsername)
+//            startActivityForResult(intent, CREATE_BOARD_REQUEST_CODE)
         }
     }
 

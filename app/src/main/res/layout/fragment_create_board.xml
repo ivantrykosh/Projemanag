@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.CreateBoardActivity">
+    tools:context=".presenter.main.create_board.CreateBoardFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,10 +14,12 @@
         android:theme="@style/AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_create_board_activity"
+            android:id="@+id/toolbar_create_board"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:title="@string/create_board_title"
+            app:navigationIcon="@drawable/ic_white_color_back_24dp"
             app:popupTheme="@style/PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>
 

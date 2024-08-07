@@ -13,10 +13,19 @@
         <action
             android:id="@+id/action_main_to_my_profile"
             app:destination="@id/main_my_profile" />
+
+        <action
+            android:id="@+id/action_main_to_create_board"
+            app:destination="@id/main_create_board" />
     </fragment>
 
     <fragment
         android:id="@+id/main_my_profile"
         android:name="com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.my_profile.MyProfileFragment"
         tools:layout="@layout/fragment_my_profile" />
+
+    <fragment
+        android:id="@+id/main_create_board"
+        android:name="com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.create_board.CreateBoardFragment"
+        tools:layout="@layout/fragment_create_board" />
 </navigation>
