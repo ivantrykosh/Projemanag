@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".activities.MyProfileActivity">
+    tools:context=".presenter.main.my_profile.MyProfileFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         app:layout_constraintTop_toTopOf="parent"
@@ -20,6 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
             android:background="?attr/colorPrimary"
+            app:title="@string/nav_my_profile"
+            app:navigationIcon="@drawable/ic_white_color_back_24dp"
             app:popupTheme="@style/PopupOverlay"/>
 
     </com.google.android.material.appbar.AppBarLayout>

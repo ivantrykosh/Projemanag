@@ -1,9 +1,11 @@
 package com.ivantrykosh.udemy_course.android14.projemanag.presenter
 
 import android.app.Dialog
+import android.net.Uri
 import android.os.Build
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.webkit.MimeTypeMap
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -40,5 +42,9 @@ open class BaseActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
+    }
+
+    fun getFileExtension(uri: Uri?): String? {
+        return MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri!!))
     }
 }

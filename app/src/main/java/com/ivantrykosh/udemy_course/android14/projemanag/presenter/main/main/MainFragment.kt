@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
@@ -36,11 +37,7 @@ class MainFragment : Fragment() {
     private val onNavigationItemClickListener = NavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_my_profile -> {
-                // todo
-//                startActivityForResult(
-//                    Intent(mainActivity, MyProfileActivity::class.java),
-//                    Main_Activity.MY_PROFILE_REQUEST_CODE
-//                )
+                findNavController().navigate(R.id.action_main_to_my_profile)
             }
             R.id.nav_sign_out -> {
                 mainViewModel.signOut()

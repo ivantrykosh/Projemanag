@@ -56,11 +56,6 @@
             android:label="@string/create_board_title"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.MyProfileActivity"
-            android:exported="false"
-            android:label="@string/nav_my_profile"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".presenter.BaseActivity"
             android:exported="false" />
         <activity
