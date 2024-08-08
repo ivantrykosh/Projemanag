@@ -42,15 +42,6 @@ class MainFragment : Fragment() {
             }
             R.id.nav_sign_out -> {
                 mainViewModel.signOut()
-                mainViewModel.signOutState.observe(viewLifecycleOwner) { result ->
-                    when {
-                        result.loading -> { }
-                        result.error.isNotEmpty() -> { mainActivity.showErrorSnackBar(result.error) }
-                        else -> {
-                            mainActivity.logout()
-                        }
-                    }
-                }
             }
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -92,10 +83,14 @@ class MainFragment : Fragment() {
             bundle.putString(User.FIELDS.NAME, mUsername)
             findNavController().navigate(R.id.action_main_to_create_board, bundle)
         }
+        observeGetCurrentIdState()
+        observeGetCurrentUserState()
+        observeGetBoardsState()
+        observeUpdateFCMTokenState()
+        observeSignOutState()
     }
 
-    private fun loadToken() {
-        mainViewModel.getCurrentUserId()
+    private fun observeGetCurrentIdState() {
         mainViewModel.getCurrentUserIdState.observe(viewLifecycleOwner) { result ->
             when {
                 result.loading -> { }
@@ -110,8 +105,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun loadUser() {
-        mainViewModel.getCurrentUser()
+    private fun observeGetCurrentUserState() {
         mainViewModel.getCurrentUserState.observe(viewLifecycleOwner) { result ->
             when {
                 result.loading -> { }
@@ -124,6 +118,56 @@ class MainFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun observeGetBoardsState() {
+        mainViewModel.getBoardsState.observe(viewLifecycleOwner) { result ->
+            when {
+                result.loading -> { }
+                result.error.isNotEmpty() -> {
+                    mainActivity.hideProgressDialog()
+                    mainActivity.showErrorSnackBar(result.error)
+                }
+                else -> {
+                    populateBoardListToUI(result.data!!)
+                }
+            }
+        }
+    }
+
+    private fun observeUpdateFCMTokenState() {
+        mainViewModel.updateUserFCMTokenState.observe(viewLifecycleOwner) { result ->
+            when {
+                result.loading -> { }
+                result.error.isNotEmpty() -> {
+                    mainActivity.hideProgressDialog()
+                    mainActivity.showErrorSnackBar(result.error)
+                }
+                else -> {
+                    tokenUpdateSuccess()
+                }
+            }
+        }
+    }
+
+    private fun observeSignOutState() {
+        mainViewModel.signOutState.observe(viewLifecycleOwner) { result ->
+            when {
+                result.loading -> { }
+                result.error.isNotEmpty() -> { mainActivity.showErrorSnackBar(result.error) }
+                else -> {
+                    mainActivity.logout()
+                }
+            }
+        }
+    }
+
+    private fun loadToken() {
+        mainViewModel.getCurrentUserId()
+    }
+
+    private fun loadUser() {
+        mainViewModel.getCurrentUser()
     }
 
     private fun updateNavigationUserDetails(user: User) {
@@ -141,18 +185,6 @@ class MainFragment : Fragment() {
 
         mainActivity.showProgressDialog()
         mainViewModel.getBoards()
-        mainViewModel.getBoardsState.observe(viewLifecycleOwner) { result ->
-            when {
-                result.loading -> { }
-                result.error.isNotEmpty() -> {
-                    mainActivity.hideProgressDialog()
-                    mainActivity.showErrorSnackBar(result.error)
-                }
-                else -> {
-                    populateBoardListToUI(result.data!!)
-                }
-            }
-        }
     }
 
     private fun populateBoardListToUI(boardList: List<Board>) {
@@ -181,18 +213,6 @@ class MainFragment : Fragment() {
 
     private fun updateFcmToken(token: String) {
         mainViewModel.updateUserFCMToken(token)
-        mainViewModel.updateUserFCMTokenState.observe(viewLifecycleOwner) { result ->
-            when {
-                result.loading -> { }
-                result.error.isNotEmpty() -> {
-                    mainActivity.hideProgressDialog()
-                    mainActivity.showErrorSnackBar(result.error)
-                }
-                else -> {
-                    tokenUpdateSuccess()
-                }
-            }
-        }
     }
 
     private fun tokenUpdateSuccess() {

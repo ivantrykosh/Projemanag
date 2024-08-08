@@ -68,11 +68,12 @@ class MyProfileFragment : Fragment() {
                 updateUserProfile()
             }
         }
+        observeGetCurrentUserState()
+        observeUpdateUserState()
+        observeUploadImageState()
     }
 
-    private fun getCurrentUser() {
-        mainActivity.showProgressDialog()
-        myProfileViewModel.getCurrentUser()
+    private fun observeGetCurrentUserState() {
         myProfileViewModel.getCurrentUserState.observe(viewLifecycleOwner) { getUser ->
             when {
                 getUser.loading -> { }
@@ -86,6 +87,44 @@ class MyProfileFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun observeUpdateUserState() {
+        myProfileViewModel.updateUserState.observe(viewLifecycleOwner) { updateUser ->
+            when {
+                updateUser.loading -> { }
+                updateUser.error.isNotEmpty() -> {
+                    mainActivity.hideProgressDialog()
+                    mainActivity.showErrorSnackBar(updateUser.error)
+                }
+                else -> {
+                    mainActivity.hideProgressDialog()
+                    userUpdatedSuccessfully()
+                }
+            }
+        }
+    }
+
+    private fun observeUploadImageState() {
+        myProfileViewModel.uploadImageState.observe(viewLifecycleOwner) { uploadImage ->
+            when {
+                uploadImage.loading -> { }
+                uploadImage.error.isNotEmpty() -> {
+                    mainActivity.hideProgressDialog()
+                    mainActivity.showErrorSnackBar(uploadImage.error)
+                }
+                else -> {
+                    mainActivity.hideProgressDialog()
+                    mDownloadableUrl = uploadImage.data
+                    updateUserProfile()
+                }
+            }
+        }
+    }
+
+    private fun getCurrentUser() {
+        mainActivity.showProgressDialog()
+        myProfileViewModel.getCurrentUser()
     }
 
     private fun setUserDataInUI(user: User) {
@@ -124,19 +163,6 @@ class MyProfileFragment : Fragment() {
         val newName = if (binding.etName.text.toString() != mUserDetails.name && !binding.etName.text.isNullOrEmpty()) binding.etName.text.toString() else ""
         val newMobile = if (binding.etMobile.text.toString() != mUserDetails.mobile.toString() && !binding.etMobile.text.isNullOrEmpty()) binding.etMobile.text.toString().toLong() else 0
         myProfileViewModel.updateUser(newImageUrl, newName, newMobile)
-        myProfileViewModel.updateUserState.observe(viewLifecycleOwner) { updateUser ->
-            when {
-                updateUser.loading -> { }
-                updateUser.error.isNotEmpty() -> {
-                    mainActivity.hideProgressDialog()
-                    mainActivity.showErrorSnackBar(updateUser.error)
-                }
-                else -> {
-                    mainActivity.hideProgressDialog()
-                    userUpdatedSuccessfully()
-                }
-            }
-        }
     }
 
     private fun userUpdatedSuccessfully() {
@@ -148,20 +174,6 @@ class MyProfileFragment : Fragment() {
         mainActivity.showProgressDialog()
         val imageName = FirebaseStorageObjects.USER_IMAGE + System.currentTimeMillis() + "." + mainActivity.getFileExtension(mSelectedImageFileUri)
         myProfileViewModel.uploadImage(imageName, mSelectedImageFileUri!!)
-        myProfileViewModel.uploadImageState.observe(viewLifecycleOwner) { uploadImage ->
-            when {
-                uploadImage.loading -> { }
-                uploadImage.error.isNotEmpty() -> {
-                    mainActivity.hideProgressDialog()
-                    mainActivity.showErrorSnackBar(uploadImage.error)
-                }
-                else -> {
-                    mainActivity.hideProgressDialog()
-                    mDownloadableUrl = uploadImage.data
-                    updateUserProfile()
-                }
-            }
-        }
     }
 
     override fun onDestroyView() {

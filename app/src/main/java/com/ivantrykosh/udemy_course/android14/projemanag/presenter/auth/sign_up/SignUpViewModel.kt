@@ -21,7 +21,7 @@ class SignUpViewModel @Inject constructor(
     getCurrentUserIdUseCase: GetCurrentUserIdUseCase,
 ) : BaseViewModel(getCurrentUserUseCase, getCurrentUserIdUseCase) {
 
-    private val _signUpState = MutableLiveData(State<Unit>())
+    private val _signUpState = MutableLiveData<State<Unit>>()
     val signUpState: LiveData<State<Unit>> = _signUpState
 
     fun signUp(email: String, password: String, name: String) {

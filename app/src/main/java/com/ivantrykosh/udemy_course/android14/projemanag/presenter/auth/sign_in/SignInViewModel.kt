@@ -21,7 +21,7 @@ class SignInViewModel @Inject constructor(
     getCurrentUserIdUseCase: GetCurrentUserIdUseCase,
 ) : BaseViewModel(getCurrentUserUseCase, getCurrentUserIdUseCase) {
 
-    private val _signInState = MutableLiveData(State<Unit>())
+    private val _signInState = MutableLiveData<State<Unit>>()
     val signInState: LiveData<State<Unit>> = _signInState
 
     fun signIn(email: String, password: String) {

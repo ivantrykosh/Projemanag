@@ -67,11 +67,12 @@ class TaskListFragment : Fragment() {
             }
             false
         }
+        observeGetBoardState()
+        observeGetUsersByIdsState()
+        observeUpdateTasksState()
     }
 
-    private fun getBoardDetails(id: String) {
-        mainActivity.showProgressDialog()
-        taskListViewModel.getBoard(id)
+    private fun observeGetBoardState() {
         taskListViewModel.getBoardState.observe(viewLifecycleOwner) { result ->
             when {
                 result.loading -> { }
@@ -87,15 +88,7 @@ class TaskListFragment : Fragment() {
         }
     }
 
-    private fun boardDetailsSuccess(board: Board) {
-        mBoard = board
-        binding.toolbarTaskList.title = mBoard.name
-        getAssignedUsers(mBoard.assignedTo)
-    }
-
-    private fun getAssignedUsers(assignedUsersIds: List<String>) {
-        mainActivity.showProgressDialog()
-        taskListViewModel.getUsersByIds(assignedUsersIds)
+    private fun observeGetUsersByIdsState() {
         taskListViewModel.getUsersByIdsState.observe(viewLifecycleOwner) { result ->
             when {
                 result.loading -> { }
@@ -109,6 +102,38 @@ class TaskListFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun observeUpdateTasksState() {
+        taskListViewModel.updateTasksState.observe(viewLifecycleOwner) { result ->
+            when {
+                result.loading -> { }
+                result.error.isNotEmpty() -> {
+                    mainActivity.hideProgressDialog()
+                    mainActivity.showErrorSnackBar(result.error)
+                }
+                else -> {
+                    mainActivity.hideProgressDialog()
+                    getBoardDetails(mBoard.documentId)
+                }
+            }
+        }
+    }
+
+    private fun getBoardDetails(id: String) {
+        mainActivity.showProgressDialog()
+        taskListViewModel.getBoard(id)
+    }
+
+    private fun boardDetailsSuccess(board: Board) {
+        mBoard = board
+        binding.toolbarTaskList.title = mBoard.name
+        getAssignedUsers(mBoard.assignedTo)
+    }
+
+    private fun getAssignedUsers(assignedUsersIds: List<String>) {
+        mainActivity.showProgressDialog()
+        taskListViewModel.getUsersByIds(assignedUsersIds)
     }
 
     private fun boardMembersListSuccess(users: List<User>) {
@@ -178,19 +203,6 @@ class TaskListFragment : Fragment() {
     private fun updateTasks() {
         mainActivity.showProgressDialog()
         taskListViewModel.updateTasks(mBoard.documentId, mBoard.taskList)
-        taskListViewModel.updateTasksState.observe(viewLifecycleOwner) { result ->
-            when {
-                result.loading -> { }
-                result.error.isNotEmpty() -> {
-                    mainActivity.hideProgressDialog()
-                    mainActivity.showErrorSnackBar(result.error)
-                }
-                else -> {
-                    mainActivity.hideProgressDialog()
-                    getBoardDetails(mBoard.documentId)
-                }
-            }
-        }
     }
 
     override fun onDestroyView() {

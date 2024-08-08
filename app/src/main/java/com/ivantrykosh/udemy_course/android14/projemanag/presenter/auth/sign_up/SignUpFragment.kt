@@ -44,6 +44,22 @@ class SignUpFragment : Fragment() {
         binding.btnSignUp.setOnClickListener {
             signUpUser()
         }
+        observeSignUpState()
+    }
+
+    private fun observeSignUpState() {
+        signUpViewModel.signUpState.observe(viewLifecycleOwner) { signUp ->
+            when {
+                signUp.loading -> { }
+                signUp.error.isNotEmpty() -> {
+                    authActivity.hideProgressDialog()
+                    authActivity.showErrorSnackBar(signUp.error)
+                }
+                else -> {
+                    authActivity.loginSuccess()
+                }
+            }
+        }
     }
 
     private fun signUpUser() {
@@ -54,18 +70,6 @@ class SignUpFragment : Fragment() {
         if (validateForm(name, email, password)) {
             authActivity.showProgressDialog()
             signUpViewModel.signUp(email, password, name)
-            signUpViewModel.signUpState.observe(viewLifecycleOwner) { signUp ->
-                when {
-                    signUp.loading -> { }
-                    signUp.error.isNotEmpty() -> {
-                        authActivity.hideProgressDialog()
-                        authActivity.showErrorSnackBar(signUp.error)
-                    }
-                    else -> {
-                        authActivity.loginSuccess()
-                    }
-                }
-            }
         }
     }
 

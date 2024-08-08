@@ -19,10 +19,10 @@ open class BaseViewModel @Inject constructor(
     private val getCurrentUserIdUseCase: GetCurrentUserIdUseCase,
 ) : ViewModel() {
 
-    private val _getCurrentUserState = MutableLiveData(State<User>())
+    private val _getCurrentUserState = MutableLiveData<State<User>>()
     val getCurrentUserState: LiveData<State<User>> = _getCurrentUserState
 
-    private val _getCurrentUserIdState = MutableLiveData(State<String>())
+    private val _getCurrentUserIdState = MutableLiveData<State<String>>()
     val getCurrentUserIdState: LiveData<State<String>> = _getCurrentUserIdState
 
     fun getCurrentUser() {

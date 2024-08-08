@@ -43,17 +43,21 @@ class SplashActivity : BaseActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             baseViewModel.getCurrentUserId()
-            baseViewModel.getCurrentUserIdState.observe(this) { state ->
-                when {
-                    state.loading -> { }
-                    state.error.isNotEmpty() -> showErrorSnackBar(state.error)
-                    else -> {
-                        val userLoggedIn = state.data!!.isNotEmpty()
-                        launchActivity(userLoggedIn)
-                    }
+        }, 2500)
+        observeGetCurrentUserIdState()
+    }
+
+    private fun observeGetCurrentUserIdState() {
+        baseViewModel.getCurrentUserIdState.observe(this) { state ->
+            when {
+                state.loading -> { }
+                state.error.isNotEmpty() -> showErrorSnackBar(state.error)
+                else -> {
+                    val userLoggedIn = state.data!!.isNotEmpty()
+                    launchActivity(userLoggedIn)
                 }
             }
-        }, 2500)
+        }
     }
 
     private fun launchActivity(userLoggedIn: Boolean) {

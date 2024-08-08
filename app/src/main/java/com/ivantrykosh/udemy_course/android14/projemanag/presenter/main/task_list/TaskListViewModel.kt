@@ -17,7 +17,6 @@ import com.ivantrykosh.udemy_course.android14.projemanag.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.takeWhile
 import javax.inject.Inject
 
 @HiltViewModel

@@ -70,6 +70,41 @@ class CreateBoardFragment : Fragment() {
                 createBoard()
             }
         }
+        observeUploadImageState()
+        observeCreateBoardState()
+    }
+
+    private fun observeUploadImageState() {
+        createBoardViewModel.uploadImageState.observe(viewLifecycleOwner) { uploadImage ->
+            when {
+                uploadImage.loading -> { }
+                uploadImage.error.isNotEmpty() -> {
+                    mainActivity.hideProgressDialog()
+                    mainActivity.showErrorSnackBar(uploadImage.error)
+                }
+                else -> {
+                    mainActivity.hideProgressDialog()
+                    mBoardImageUrl = uploadImage.data
+                    createBoard()
+                }
+            }
+        }
+    }
+
+    private fun observeCreateBoardState() {
+        createBoardViewModel.createBoardState.observe(viewLifecycleOwner) { result ->
+            when {
+                result.loading -> { }
+                result.error.isNotEmpty() -> {
+                    mainActivity.hideProgressDialog()
+                    mainActivity.showErrorSnackBar(result.error)
+                }
+                else -> {
+                    mainActivity.hideProgressDialog()
+                    boardCreatedSuccessfully()
+                }
+            }
+        }
     }
 
     private fun setImage(image: Uri) {
@@ -90,20 +125,6 @@ class CreateBoardFragment : Fragment() {
         mainActivity.showProgressDialog()
         val imageName = FirebaseStorageObjects.BOARD_IMAGE + System.currentTimeMillis() + "." + mainActivity.getFileExtension(mSelectedImageFileUri)
         createBoardViewModel.uploadImage(imageName, mSelectedImageFileUri!!)
-        createBoardViewModel.uploadImageState.observe(viewLifecycleOwner) { uploadImage ->
-            when {
-                uploadImage.loading -> { }
-                uploadImage.error.isNotEmpty() -> {
-                    mainActivity.hideProgressDialog()
-                    mainActivity.showErrorSnackBar(uploadImage.error)
-                }
-                else -> {
-                    mainActivity.hideProgressDialog()
-                    mBoardImageUrl = uploadImage.data
-                    createBoard()
-                }
-            }
-        }
     }
 
     private fun createBoard() {
@@ -115,19 +136,6 @@ class CreateBoardFragment : Fragment() {
             Toast.makeText(context, R.string.please_enter_name, Toast.LENGTH_SHORT).show()
         } else {
             createBoardViewModel.createBoard(name, mBoardImageUrl ?: "", mUsername, assignedUsersList)
-            createBoardViewModel.createBoardState.observe(viewLifecycleOwner) { result ->
-                when {
-                    result.loading -> { }
-                    result.error.isNotEmpty() -> {
-                        mainActivity.hideProgressDialog()
-                        mainActivity.showErrorSnackBar(result.error)
-                    }
-                    else -> {
-                        mainActivity.hideProgressDialog()
-                        boardCreatedSuccessfully()
-                    }
-                }
-            }
         }
     }
 
