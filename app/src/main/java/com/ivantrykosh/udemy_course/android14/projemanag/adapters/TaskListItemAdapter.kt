@@ -12,17 +12,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.activities.TaskListActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Task
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.task_list.TaskListFragment
 import java.util.Collections
 
-open class TaskListItemAdapter(private val context: Context, private var list: ArrayList<Task>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class TaskListItemAdapter(private val context: Context, private var list: ArrayList<Task>, private val fragment: Fragment? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mPositionDraggedFrom = -1
     private var mPositionDraggedTo = -1
@@ -64,8 +65,8 @@ open class TaskListItemAdapter(private val context: Context, private var list: A
             holder.itemView.findViewById<ImageButton>(R.id.ib_done_list_name).setOnClickListener {
                 val listName = holder.itemView.findViewById<EditText>(R.id.et_task_list_name).text.toString()
                 if (listName.isNotEmpty()) {
-                    if (context is TaskListActivity) {
-                        context.createTaskList(listName)
+                    if (fragment is TaskListFragment) {
+                        fragment.createTaskList(listName)
                     }
                 } else {
                     Toast.makeText(context, R.string.please_enter_list_name, Toast.LENGTH_LONG).show()
@@ -83,8 +84,8 @@ open class TaskListItemAdapter(private val context: Context, private var list: A
             holder.itemView.findViewById<ImageButton>(R.id.ib_done_edit_list_name).setOnClickListener {
                 val listName = holder.itemView.findViewById<EditText>(R.id.et_edit_task_list_name).text.toString()
                 if (listName.isNotEmpty()) {
-                    if (context is TaskListActivity) {
-                        context.updateTaskList(position, listName, model)
+                    if (fragment is TaskListFragment) {
+                        fragment.updateTaskList(position, listName, model)
                     }
                 } else {
                     Toast.makeText(context, R.string.please_enter_list_name, Toast.LENGTH_LONG).show()
@@ -105,8 +106,8 @@ open class TaskListItemAdapter(private val context: Context, private var list: A
             holder.itemView.findViewById<ImageButton>(R.id.ib_done_card_name).setOnClickListener {
                 val cardName = holder.itemView.findViewById<EditText>(R.id.et_card_name).text.toString()
                 if (cardName.isNotEmpty()) {
-                    if (context is TaskListActivity) {
-                        context.addCardToTaskList(position, cardName)
+                    if (fragment is TaskListFragment) {
+                        fragment.addCardToTaskList(position, cardName)
                     }
                 } else {
                     Toast.makeText(context, R.string.please_enter_card_name, Toast.LENGTH_LONG).show()
@@ -115,13 +116,13 @@ open class TaskListItemAdapter(private val context: Context, private var list: A
             val rvCardList = holder.itemView.findViewById<RecyclerView>(R.id.rv_card_list)
             rvCardList.layoutManager = LinearLayoutManager(context)
             holder.itemView.findViewById<RecyclerView>(R.id.rv_card_list).setHasFixedSize(true)
-            val adapter = CardListItemsAdapter(context, model.cards)
+            val adapter = CardListItemsAdapter(context, model.cards, fragment)
             val pos = position
             rvCardList.adapter = adapter
             adapter.setOnClickListener(object : CardListItemsAdapter.OnClickListener {
                 override fun onClick(cardPosition: Int) {
-                    if (context is TaskListActivity) {
-                        context.cardDetails(pos, cardPosition)
+                    if (fragment is TaskListFragment) {
+                        fragment.cardDetails(pos, cardPosition)
                     }
                 }
             })
@@ -153,7 +154,7 @@ open class TaskListItemAdapter(private val context: Context, private var list: A
                 ) {
                     super.clearView(recyclerView, viewHolder)
                     if (mPositionDraggedFrom != -1 && mPositionDraggedTo != -1 && mPositionDraggedFrom != mPositionDraggedTo) {
-                        (context as TaskListActivity).updateCardsInTaskList(pos, list[pos].cards)
+                        (fragment as TaskListFragment).updateCardsInTaskList(pos, list[pos].cards)
                     }
                     mPositionDraggedFrom = -1
                     mPositionDraggedTo = -1
@@ -170,8 +171,8 @@ open class TaskListItemAdapter(private val context: Context, private var list: A
         builder.setIcon(android.R.drawable.ic_dialog_alert)
         builder.setPositiveButton(R.string.yes) { dialogInterface, which ->
             dialogInterface.dismiss()
-            if (context is TaskListActivity) {
-                context.deleteTaskList(position)
+            if (fragment is TaskListFragment) {
+                fragment.deleteTaskList(position)
             }
         }
         builder.setNegativeButton(R.string.no) { dialogInterface, which ->

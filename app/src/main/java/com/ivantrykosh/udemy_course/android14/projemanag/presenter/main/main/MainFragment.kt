@@ -167,10 +167,10 @@ class MainFragment : Fragment() {
             binding.mainContent.rvBoardsList.adapter = adapter
             adapter.setOnClickListener(object : BoardItemsAdapter.OnClickListener {
                 override fun onClick(position: Int, model: Board) {
-                    // todo
-//                    val intent = Intent(this@Main_Activity, TaskListActivity::class.java)
-//                    intent.putExtra(Board.FIELDS.DOCUMENT_ID, model.documentId)
-//                    startActivity(intent)
+                    val bundle = Bundle()
+                    bundle.putString(Board.FIELDS.DOCUMENT_ID, model.documentId)
+                    bundle.putString(User.FIELDS.ID, mUserId)
+                    findNavController().navigate(R.id.action_main_to_task_list, bundle)
                 }
             })
         } else {

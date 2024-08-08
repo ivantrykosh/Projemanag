@@ -17,6 +17,10 @@
         <action
             android:id="@+id/action_main_to_create_board"
             app:destination="@id/main_create_board" />
+
+        <action
+            android:id="@+id/action_main_to_task_list"
+            app:destination="@id/main_task_list" />
     </fragment>
 
     <fragment
@@ -28,4 +32,9 @@
         android:id="@+id/main_create_board"
         android:name="com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.create_board.CreateBoardFragment"
         tools:layout="@layout/fragment_create_board" />
+
+    <fragment
+        android:id="@+id/main_task_list"
+        android:name="com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.task_list.TaskListFragment"
+        tools:layout="@layout/fragment_task_list" />
 </navigation>

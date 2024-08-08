@@ -6,16 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.activities.TaskListActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Card
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.SelectedMembers
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.task_list.TaskListFragment
 
 open class CardListItemsAdapter(
     private val context: Context,
-    private var list: ArrayList<Card>
+    private var list: ArrayList<Card>,
+    private val fragment: Fragment? = null
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var onClickListener: OnClickListener? = null
 
@@ -50,14 +52,14 @@ open class CardListItemsAdapter(
 
             holder.itemView.findViewById<TextView>(R.id.tv_card_name).text = model.name
 
-            if ((context as TaskListActivity).mAssignedMembersDetailList.size > 0) {
+            if ((fragment as TaskListFragment).mAssignedMembersDetailList.size > 0) {
                 val selectedMembersList = ArrayList<SelectedMembers>()
-                for (i in context.mAssignedMembersDetailList.indices) {
+                for (i in fragment.mAssignedMembersDetailList.indices) {
                     for (j in model.assignedTo) {
-                        if (context.mAssignedMembersDetailList[i].id == j) {
+                        if (fragment.mAssignedMembersDetailList[i].id == j) {
                             val selectedMembers = SelectedMembers(
-                                context.mAssignedMembersDetailList[i].id,
-                                context.mAssignedMembersDetailList[i].image
+                                fragment.mAssignedMembersDetailList[i].id,
+                                fragment.mAssignedMembersDetailList[i].image
                             )
                             selectedMembersList.add(selectedMembers)
                         }

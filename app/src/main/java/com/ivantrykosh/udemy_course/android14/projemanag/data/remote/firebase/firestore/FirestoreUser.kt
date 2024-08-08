@@ -41,7 +41,7 @@ class FirestoreUser {
 
     suspend fun getUsersByIds(usersIds: List<String>): List<User> {
         return mFirestore.collection(FirestoreCollections.USERS)
-            .whereIn(User.FIELDS.EMAIL, usersIds)
+            .whereIn(User.FIELDS.ID, usersIds)
             .get()
             .await()
             .toObjects(User::class.java)

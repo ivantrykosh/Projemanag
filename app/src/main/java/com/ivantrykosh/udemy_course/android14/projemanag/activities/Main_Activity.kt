@@ -87,9 +87,9 @@ class Main_Activity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
             binding.mainContent.rvBoardsList.adapter = adapter
             adapter.setOnClickListener(object : BoardItemsAdapter.OnClickListener {
                 override fun onClick(position: Int, model: Board) {
-                    val intent = Intent(this@Main_Activity, TaskListActivity::class.java)
-                    intent.putExtra(Board.FIELDS.DOCUMENT_ID, model.documentId)
-                    startActivity(intent)
+//                    val intent = Intent(this@Main_Activity, TaskListActivity::class.java)
+//                    intent.putExtra(Board.FIELDS.DOCUMENT_ID, model.documentId)
+//                    startActivity(intent)
                 }
             })
         } else {

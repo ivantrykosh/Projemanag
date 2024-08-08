@@ -45,11 +45,6 @@
             android:label="@string/members"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.TaskListActivity"
-            android:exported="false"
-            android:label="@string/task_list"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".presenter.BaseActivity"
             android:exported="false" />
         <activity
