@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main"
     android:orientation="vertical"
-    tools:context=".activities.CardDetailsActivity">
+    tools:context=".presenter.main.card_details.CardDetailsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,10 +14,12 @@
         android:theme="@style/AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_card_details_activity"
+            android:id="@+id/toolbar_card_details"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:navigationIcon="@drawable/ic_white_color_back_24dp"
+            app:menu="@menu/menu_delete_card"
             app:popupTheme="@style/PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -103,7 +105,7 @@
                     android:padding="@dimen/card_details_value_padding"
                     android:text="@string/select_members"
                     android:textColor="@color/primary_text_color" />
-                
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_selected_members_list"
                     android:layout_width="match_parent"

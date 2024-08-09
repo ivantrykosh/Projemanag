@@ -36,5 +36,15 @@
     <fragment
         android:id="@+id/main_task_list"
         android:name="com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.task_list.TaskListFragment"
-        tools:layout="@layout/fragment_task_list" />
+        tools:layout="@layout/fragment_task_list">
+
+        <action
+            android:id="@+id/action_task_list_to_card_details"
+            app:destination="@id/main_card_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/main_card_details"
+        android:name="com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.card_details.CardDetailsFragment"
+        tools:layout="@layout/fragment_card_details" />
 </navigation>

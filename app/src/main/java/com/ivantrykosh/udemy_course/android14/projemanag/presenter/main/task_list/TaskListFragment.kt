@@ -107,6 +107,7 @@ class TaskListFragment : Fragment() {
     private fun observeUpdateTasksState() {
         taskListViewModel.updateTasksState.observe(viewLifecycleOwner) { result ->
             when {
+                result == null -> { }
                 result.loading -> { }
                 result.error.isNotEmpty() -> {
                     mainActivity.hideProgressDialog()
@@ -184,8 +185,7 @@ class TaskListFragment : Fragment() {
         bundle.putInt(Constants.TASK_LIST_ITEM_POSITION, taskListPosition)
         bundle.putInt(Constants.CARD_LIST_ITEM_POSITION, cardPosition)
         bundle.putParcelableArrayList(Constants.BOARD_MEMBERS_LIST, mAssignedMembersDetailList)
-        // todo navigate to CardDetailsFragment with bundle
-        Toast.makeText(context, bundle.toString(), Toast.LENGTH_LONG).show()
+        findNavController().navigate(R.id.action_task_list_to_card_details, bundle)
     }
 
     fun updateCardsInTaskList(taskListPosition: Int, cards: ArrayList<Card>) {
@@ -208,5 +208,6 @@ class TaskListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        taskListViewModel.clearValues()
     }
 }

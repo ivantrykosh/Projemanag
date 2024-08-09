@@ -31,8 +31,8 @@ class TaskListViewModel @Inject constructor(
     private val _getBoardState = MutableLiveData<State<Board>>()
     val getBoardState: LiveData<State<Board>> = _getBoardState
 
-    private val _updateTasksState = MutableLiveData<State<Unit>>()
-    val updateTasksState: LiveData<State<Unit>> = _updateTasksState
+    private val _updateTasksState = MutableLiveData<State<Unit>?>()
+    val updateTasksState: LiveData<State<Unit>?> = _updateTasksState
 
     private val _getUsersByIdsState = MutableLiveData<State<List<User>>>()
     val getUsersByIdsState: LiveData<State<List<User>>> = _getUsersByIdsState
@@ -68,5 +68,9 @@ class TaskListViewModel @Inject constructor(
                 is Resource.Loading -> _getUsersByIdsState.value = State(loading = true)
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun clearValues() {
+        _updateTasksState.value = null
     }
 }
