@@ -11,12 +11,14 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.activities.Main_Activity
-import com.ivantrykosh.udemy_course.android14.projemanag.firebase.Firestore
+import com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.FirebaseAuth
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.auth.AuthActivity
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.MainActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.AppPreferences
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
+import dagger.hilt.android.scopes.ServiceScoped
 
+@ServiceScoped
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -39,8 +41,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendNotification(title:String, message: String) {
-        val intent = if (Firestore().getCurrentUserId().isNotEmpty())
-            Intent(this, Main_Activity::class.java)
+        val intent = if (FirebaseAuth().getCurrentUserId().isNotEmpty())
+            Intent(this, MainActivity::class.java)
         else
             Intent(this, AuthActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)

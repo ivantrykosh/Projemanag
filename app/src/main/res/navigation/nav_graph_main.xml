@@ -41,10 +41,19 @@
         <action
             android:id="@+id/action_task_list_to_card_details"
             app:destination="@id/main_card_details" />
+
+        <action
+            android:id="@+id/action_task_list_to_members"
+            app:destination="@id/main_members" />
     </fragment>
 
     <fragment
         android:id="@+id/main_card_details"
         android:name="com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.card_details.CardDetailsFragment"
         tools:layout="@layout/fragment_card_details" />
+
+    <fragment
+        android:id="@+id/main_members"
+        android:name="com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.members.MembersFragment"
+        tools:layout="@layout/fragment_members" />
 </navigation>

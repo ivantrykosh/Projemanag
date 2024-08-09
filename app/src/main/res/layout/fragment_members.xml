@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.MembersActivity">
+    tools:context=".presenter.main.members.MembersFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,10 +14,13 @@
         android:theme="@style/AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_members_activity"
+            android:id="@+id/toolbar_members"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:title="@string/members"
+            app:navigationIcon="@drawable/ic_white_color_back_24dp"
+            app:menu="@menu/menu_add_member"
             app:popupTheme="@style/PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -60,8 +59,7 @@ class TaskListFragment : Fragment() {
                 R.id.action_members -> {
                     val bundle = Bundle()
                     bundle.putParcelable(Constants.BOARD_DETAIL, mBoard)
-                    // todo navigate to MembersFragment with bundle
-                    Toast.makeText(context, "Nav to MembersFragment", Toast.LENGTH_LONG).show()
+                    findNavController().navigate(R.id.action_task_list_to_members, bundle)
                     return@setOnMenuItemClickListener true
                 }
             }

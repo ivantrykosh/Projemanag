@@ -17,12 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.Projemanag"
         tools:targetApi="31">
-        <activity
-            android:name=".presenter.main.MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presenter.auth.AuthActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -35,10 +29,11 @@
             android:value="@string/default_notification_channel_id" />
 
         <activity
-            android:name=".activities.MembersActivity"
-            android:exported="false"
-            android:label="@string/members"
-            android:screenOrientation="portrait" />
+            android:name=".presenter.main.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presenter.auth.AuthActivity"
+            android:exported="false" />
         <activity
             android:name=".presenter.BaseActivity"
             android:exported="false" />
@@ -52,10 +47,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.Main_Activity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
 
         <service
             android:name=".fcm.MyFirebaseMessagingService"
