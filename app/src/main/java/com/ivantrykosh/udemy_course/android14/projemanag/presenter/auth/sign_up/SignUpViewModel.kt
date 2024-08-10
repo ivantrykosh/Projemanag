@@ -25,7 +25,6 @@ class SignUpViewModel @Inject constructor(
     val signUpState: LiveData<State<Unit>> = _signUpState
 
     fun signUp(email: String, password: String, name: String) {
-        _signUpState.value = State(loading = true)
         signUpUseCase(email, password, name).onEach { result ->
             when (result) {
                 is Resource.Success -> {

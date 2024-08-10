@@ -32,7 +32,6 @@ class CreateBoardViewModel @Inject constructor(
     val createBoardState: LiveData<State<String>> = _createBoardState
 
     fun uploadImage(newName: String, imageUri: Uri) {
-        _uploadImageState.value = State(loading = true)
         uploadImageUseCase(newName, imageUri).onEach { result ->
             when (result) {
                 is Resource.Success -> _uploadImageState.value = State(data = result.data)
@@ -49,7 +48,6 @@ class CreateBoardViewModel @Inject constructor(
             createdBy = createdBy,
             assignedTo = assignedTo,
         )
-        _createBoardState.value = State(loading = true)
         createBoardUseCase(newBoard).onEach { result ->
             when (result) {
                 is Resource.Success -> _createBoardState.value = State()

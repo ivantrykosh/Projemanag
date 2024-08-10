@@ -36,7 +36,6 @@ class MembersViewModel @Inject constructor(
     val getUserByEmailState: LiveData<State<User>> = _getUserByEmailState
 
     fun getUsersByIds(usersIds: List<String>) {
-        _getUsersByIdsState.value = State(loading = true)
         getUsersByIdsUseCase(usersIds).onEach { result ->
             when (result) {
                 is Resource.Success -> _getUsersByIdsState.value = State(data = result.data)
@@ -47,7 +46,6 @@ class MembersViewModel @Inject constructor(
     }
 
     fun assignMembers(boardId: String, members: List<String>) {
-        _assignMembersState.value = State(loading = true)
         assignMembersUseCase(boardId, members).onEach { result ->
             when (result) {
                 is Resource.Success -> _assignMembersState.value = State(data = result.data)
@@ -58,7 +56,6 @@ class MembersViewModel @Inject constructor(
     }
 
     fun getUserByEmail(email: String) {
-        _getUserByEmailState.value = State(loading = true)
         getUserByEmailUseCase(email).onEach { result ->
             when (result) {
                 is Resource.Success -> _getUserByEmailState.value = State(data = result.data)

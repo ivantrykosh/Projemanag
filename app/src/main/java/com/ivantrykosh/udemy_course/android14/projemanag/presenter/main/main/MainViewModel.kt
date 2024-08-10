@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.board.GetBoardsUseCase
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.firebase_instance.GetTokenUseCase
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.user.GetCurrentUserUseCase
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.user.UpdateUserUseCase
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.user_auth.GetCurrentUserIdUseCase
@@ -24,6 +25,7 @@ class MainViewModel @Inject constructor(
     private val getBoardsUseCase: GetBoardsUseCase,
     private val updateUserUseCase: UpdateUserUseCase,
     private val signOutUseCase: SignOutUseCase,
+    private val getTokenUseCase: GetTokenUseCase,
     getCurrentUserUseCase: GetCurrentUserUseCase,
     getCurrentUserIdUseCase: GetCurrentUserIdUseCase
 ): BaseViewModel(getCurrentUserUseCase, getCurrentUserIdUseCase) {
@@ -37,8 +39,10 @@ class MainViewModel @Inject constructor(
     private val _signOutState = MutableLiveData<State<Unit>>()
     val signOutState: LiveData<State<Unit>> = _signOutState
 
+    private val _getTokenState = MutableLiveData<State<String>>()
+    val getTokenState: LiveData<State<String>> = _getTokenState
+
     fun getBoards() {
-        _getBoardsState.value = State(loading = true)
         getBoardsUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> _getBoardsState.value = State(data = result.data)
@@ -50,7 +54,6 @@ class MainViewModel @Inject constructor(
 
     fun updateUserFCMToken(newToken: String) {
         val userHashMap = mapOf(User.FIELDS.FCM_TOKEN to newToken)
-        _updateUserFCMTokenState.value = State(loading = true)
         updateUserUseCase(userHashMap).onEach { result ->
             when (result) {
                 is Resource.Success -> _updateUserFCMTokenState.value = State()
@@ -61,7 +64,6 @@ class MainViewModel @Inject constructor(
     }
 
     fun signOut() {
-        _signOutState.value = State(loading = true)
         signOutUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
@@ -74,6 +76,16 @@ class MainViewModel @Inject constructor(
                 is Resource.Loading -> {
                     _signOutState.value = State(loading = true)
                 }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getToken() {
+        getTokenUseCase().onEach { result ->
+            when (result) {
+                is Resource.Success -> _getTokenState.value = State(data = result.data)
+                is Resource.Error -> _getTokenState.value = State(error = result.message)
+                is Resource.Loading -> _getTokenState.value = State(loading = true)
             }
         }.launchIn(viewModelScope)
     }

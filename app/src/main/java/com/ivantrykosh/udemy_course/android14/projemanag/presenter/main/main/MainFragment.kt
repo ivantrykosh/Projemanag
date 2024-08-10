@@ -83,26 +83,11 @@ class MainFragment : Fragment() {
             bundle.putString(User.FIELDS.NAME, mUsername)
             findNavController().navigate(R.id.action_main_to_create_board, bundle)
         }
-        observeGetCurrentIdState()
         observeGetCurrentUserState()
         observeGetBoardsState()
         observeUpdateFCMTokenState()
         observeSignOutState()
-    }
-
-    private fun observeGetCurrentIdState() {
-        mainViewModel.getCurrentUserIdState.observe(viewLifecycleOwner) { result ->
-            when {
-                result.loading -> { }
-                result.error.isNotEmpty() -> {
-                    mainActivity.hideProgressDialog()
-                    mainActivity.showErrorSnackBar(result.error)
-                }
-                else -> {
-                    updateFcmToken(result.data!!)
-                }
-            }
-        }
+        observeGetTokenState()
     }
 
     private fun observeGetCurrentUserState() {
@@ -114,6 +99,7 @@ class MainFragment : Fragment() {
                     mainActivity.showErrorSnackBar(result.error)
                 }
                 else -> {
+                    mainActivity.hideProgressDialog()
                     updateNavigationUserDetails(result.data!!)
                 }
             }
@@ -129,6 +115,7 @@ class MainFragment : Fragment() {
                     mainActivity.showErrorSnackBar(result.error)
                 }
                 else -> {
+                    mainActivity.hideProgressDialog()
                     populateBoardListToUI(result.data!!)
                 }
             }
@@ -162,8 +149,23 @@ class MainFragment : Fragment() {
         }
     }
 
+    private fun observeGetTokenState() {
+        mainViewModel.getTokenState.observe(viewLifecycleOwner) { result ->
+            when {
+                result.loading -> { }
+                result.error.isNotEmpty() -> {
+                    mainActivity.hideProgressDialog()
+                    mainActivity.showErrorSnackBar(result.error)
+                }
+                else -> {
+                    updateFcmToken(result.data!!)
+                }
+            }
+        }
+    }
+
     private fun loadToken() {
-        mainViewModel.getCurrentUserId()
+        mainViewModel.getToken()
     }
 
     private fun loadUser() {
@@ -171,7 +173,6 @@ class MainFragment : Fragment() {
     }
 
     private fun updateNavigationUserDetails(user: User) {
-        mainActivity.hideProgressDialog()
         mUsername = user.name
         mUserId = user.id
         Glide
@@ -188,7 +189,6 @@ class MainFragment : Fragment() {
     }
 
     private fun populateBoardListToUI(boardList: List<Board>) {
-        mainActivity.hideProgressDialog()
         if (boardList.isNotEmpty()) {
             binding.mainContent.rvBoardsList.visibility = View.VISIBLE
             binding.mainContent.tvNoBoardsAvailable.visibility = View.GONE

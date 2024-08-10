@@ -38,7 +38,6 @@ class TaskListViewModel @Inject constructor(
     val getUsersByIdsState: LiveData<State<List<User>>> = _getUsersByIdsState
 
     fun getBoard(id: String) {
-        _getBoardState.value = State(loading = true)
         getBoardUseCase(id).onEach { result ->
             when (result) {
                 is Resource.Success -> _getBoardState.value = State(data = result.data)
@@ -49,7 +48,6 @@ class TaskListViewModel @Inject constructor(
     }
 
     fun updateTasks(boardId: String, tasks: List<Task>) {
-        _updateTasksState.value = State(loading = true)
         updateTasksUseCase(boardId, tasks).onEach { result ->
             when (result) {
                 is Resource.Success -> _updateTasksState.value = State()
@@ -60,7 +58,6 @@ class TaskListViewModel @Inject constructor(
     }
 
     fun getUsersByIds(ids: List<String>) {
-        _getUsersByIdsState.value = State(loading = true)
         getUsersByIdsUseCase(ids).onEach { result ->
             when (result) {
                 is Resource.Success -> _getUsersByIdsState.value = State(data = result.data)

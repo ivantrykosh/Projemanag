@@ -33,7 +33,6 @@ class MyProfileViewModel @Inject constructor(
 
     fun updateUser(newImageUrl: String = "", newName: String = "", newMobile: Long = 0) {
         val userData = getUserDataMapFromValues(newImageUrl, newName, newMobile)
-        _updateUserState.value = State(loading = true)
         updateUserUseCase(userData).onEach { result ->
             when (result) {
                 is Resource.Success -> _updateUserState.value = State()
@@ -44,7 +43,6 @@ class MyProfileViewModel @Inject constructor(
     }
 
     fun uploadImage(newName: String, imageUri: Uri) {
-        _uploadImageState.value = State(loading = true)
         uploadImageUseCase(newName, imageUri).onEach { result ->
             when (result) {
                 is Resource.Success -> _uploadImageState.value = State(data = result.data)

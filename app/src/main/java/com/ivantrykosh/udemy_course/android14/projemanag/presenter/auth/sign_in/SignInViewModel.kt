@@ -25,7 +25,6 @@ class SignInViewModel @Inject constructor(
     val signInState: LiveData<State<Unit>> = _signInState
 
     fun signIn(email: String, password: String) {
-        _signInState.value = State(loading = true)
         signInUseCase(email, password).onEach { result ->
             when (result) {
                 is Resource.Success -> {

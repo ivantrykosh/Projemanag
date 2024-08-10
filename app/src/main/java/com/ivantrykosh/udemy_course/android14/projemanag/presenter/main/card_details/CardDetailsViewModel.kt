@@ -26,7 +26,6 @@ class CardDetailsViewModel @Inject constructor(
     val updateTasksState: LiveData<State<Unit>> = _updateTasksState
 
     fun updateTasks(boardId: String, tasks: List<Task>) {
-        _updateTasksState.value = State(loading = true)
         updateTasksUseCase(boardId, tasks).onEach { result ->
             when (result) {
                 is Resource.Success -> _updateTasksState.value = State()

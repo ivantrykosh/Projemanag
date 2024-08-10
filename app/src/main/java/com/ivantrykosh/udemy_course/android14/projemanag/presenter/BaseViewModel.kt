@@ -26,7 +26,6 @@ open class BaseViewModel @Inject constructor(
     val getCurrentUserIdState: LiveData<State<String>> = _getCurrentUserIdState
 
     fun getCurrentUser() {
-        _getCurrentUserState.value = State(loading = true)
         getCurrentUserUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
@@ -43,7 +42,6 @@ open class BaseViewModel @Inject constructor(
     }
 
     fun getCurrentUserId() {
-        _getCurrentUserIdState.value = State(loading = true)
         getCurrentUserIdUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
