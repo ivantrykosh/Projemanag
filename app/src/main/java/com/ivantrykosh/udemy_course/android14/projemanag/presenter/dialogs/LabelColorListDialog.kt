@@ -1,4 +1,4 @@
-package com.ivantrykosh.udemy_course.android14.projemanag.dialogs
+package com.ivantrykosh.udemy_course.android14.projemanag.presenter.dialogs
 
 import android.app.Dialog
 import android.content.Context
@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.adapters.LabelColorListItemsAdapter
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.adapters.LabelColorListItemsAdapter
 
 abstract class LabelColorListDialog(
     context: Context,
@@ -34,7 +34,6 @@ abstract class LabelColorListDialog(
         val rvList = view.findViewById<RecyclerView>(R.id.rvList)
         rvList.layoutManager = LinearLayoutManager(context)
         adapter = LabelColorListItemsAdapter(context, list, mSelectedColor)
-        rvList.adapter = adapter
         adapter!!.setOnClickListener(object : LabelColorListItemsAdapter.OnItemClickListener {
             override fun onClick(position: Int, color: String) {
                 dismiss()
@@ -42,6 +41,7 @@ abstract class LabelColorListDialog(
             }
 
         })
+        rvList.adapter = adapter
     }
 
     protected abstract fun onItemSelected(color: String)

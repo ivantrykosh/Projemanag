@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.adapters.BoardItemsAdapter
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.adapters.BoardItemsAdapter
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.FragmentMainBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User

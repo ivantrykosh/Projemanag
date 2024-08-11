@@ -15,10 +15,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.adapters.CardMemberListItemsAdapter
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.adapters.CardMemberListItemsAdapter
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.FragmentCardDetailsBinding
-import com.ivantrykosh.udemy_course.android14.projemanag.dialogs.LabelColorListDialog
-import com.ivantrykosh.udemy_course.android14.projemanag.dialogs.MembersListDialog
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.dialogs.LabelColorListDialog
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.dialogs.MembersListDialog
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Card
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.SelectedMembers

@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.adapters.TaskListItemAdapter
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.adapters.TaskListItemAdapter
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.FragmentTaskListBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Card
@@ -32,7 +32,7 @@ class TaskListFragment : Fragment() {
     private lateinit var mUserId: String
     private lateinit var mBoardId: String
     private lateinit var mBoard: Board
-    lateinit var mAssignedMembersDetailList: ArrayList<User>
+    private lateinit var mAssignedMembersDetailList: ArrayList<User>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -143,7 +143,37 @@ class TaskListFragment : Fragment() {
 
         binding.rvTaskList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvTaskList.setHasFixedSize(true)
-        val adapter = TaskListItemAdapter(requireContext(), mBoard.taskList, this)
+        val adapter = TaskListItemAdapter(requireContext(), mBoard.taskList, mAssignedMembersDetailList)
+        adapter.setCreateTaskListListener(object : TaskListItemAdapter.OnCreateTaskListListener {
+            override fun onClick(taskListName: String) {
+                createTaskList(taskListName)
+            }
+        })
+        adapter.setUpdateTaskListListener(object : TaskListItemAdapter.OnUpdateTaskListListener {
+            override fun onClick(position: Int, listName: String, model: Task) {
+                updateTaskList(position, listName, model)
+            }
+        })
+        adapter.setAddCardToTaskListListener(object : TaskListItemAdapter.OnAddCardToTaskListListener {
+            override fun onClick(position: Int, cardName: String) {
+                addCardToTaskList(position, cardName)
+            }
+        })
+        adapter.setCardClickListener(object : TaskListItemAdapter.OnCardClickListener {
+            override fun onClick(position: Int, cardPosition: Int) {
+                cardDetails(position, cardPosition)
+            }
+        })
+        adapter.setUpdateCardsListener(object : TaskListItemAdapter.OnUpdateCardsListener {
+            override fun onClick(position: Int, cards: ArrayList<Card>) {
+                updateCardsInTaskList(position, cards)
+            }
+        })
+        adapter.setDeleteTaskListListener(object : TaskListItemAdapter.OnDeleteTaskListListener {
+            override fun onClick(position: Int) {
+                deleteTaskList(position)
+            }
+        })
         binding.rvTaskList.adapter = adapter
     }
 

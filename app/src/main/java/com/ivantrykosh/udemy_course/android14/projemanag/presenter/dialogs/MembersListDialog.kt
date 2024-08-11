@@ -1,4 +1,4 @@
-package com.ivantrykosh.udemy_course.android14.projemanag.dialogs
+package com.ivantrykosh.udemy_course.android14.projemanag.presenter.dialogs
 
 import android.app.Dialog
 import android.content.Context
@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.adapters.MemberListItemsAdapter
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.adapters.MemberListItemsAdapter
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 
 abstract class MembersListDialog(
@@ -39,8 +39,6 @@ abstract class MembersListDialog(
             val rvList = view.findViewById<RecyclerView>(R.id.rvList)
             rvList.layoutManager = LinearLayoutManager(context)
             adapter = MemberListItemsAdapter(context, list)
-            rvList.adapter = adapter
-
             adapter!!.setOnClickListener(object :
                 MemberListItemsAdapter.OnClickListener {
                 override fun onClick(position: Int, user: User, action:String) {
@@ -48,6 +46,7 @@ abstract class MembersListDialog(
                     onItemSelected(user, action)
                 }
             })
+            rvList.adapter = adapter
         }
     }
 

@@ -16,7 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ivantrykosh.udemy_course.android14.projemanag.R
-import com.ivantrykosh.udemy_course.android14.projemanag.adapters.MemberListItemsAdapter
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.adapters.MemberListItemsAdapter
 import com.ivantrykosh.udemy_course.android14.projemanag.databinding.FragmentMembersBinding
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
