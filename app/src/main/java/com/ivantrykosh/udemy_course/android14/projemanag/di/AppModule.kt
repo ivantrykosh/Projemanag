@@ -1,17 +1,17 @@
 package com.ivantrykosh.udemy_course.android14.projemanag.di
 
 import com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.FirebaseAuth
-import com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.FirebaseInstance
+import com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.FirebaseMessaging
 import com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.FirebaseStorage
 import com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.firestore.FirestoreBoard
 import com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase.firestore.FirestoreUser
 import com.ivantrykosh.udemy_course.android14.projemanag.data.repository.BoardRepositoryImpl
-import com.ivantrykosh.udemy_course.android14.projemanag.data.repository.FirebaseInstanceRepositoryImpl
+import com.ivantrykosh.udemy_course.android14.projemanag.data.repository.FirebaseMessagingRepositoryImpl
 import com.ivantrykosh.udemy_course.android14.projemanag.data.repository.FirebaseStorageRepositoryImpl
 import com.ivantrykosh.udemy_course.android14.projemanag.data.repository.UserAuthRepositoryImpl
 import com.ivantrykosh.udemy_course.android14.projemanag.data.repository.UserRepositoryImpl
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.repository.BoardRepository
-import com.ivantrykosh.udemy_course.android14.projemanag.domain.repository.FirebaseInstanceRepository
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.repository.FirebaseMessagingRepository
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.repository.FirebaseStorageRepository
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.repository.UserAuthRepository
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.repository.UserRepository
@@ -51,8 +51,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFirebaseInstanceObject(): FirebaseInstance {
-        return FirebaseInstance()
+    fun provideFirebaseMessagingObject(): FirebaseMessaging {
+        return FirebaseMessaging()
     }
 
     @Provides
@@ -81,7 +81,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFirebaseInstanceRepository(firebaseInstance: FirebaseInstance): FirebaseInstanceRepository {
-        return FirebaseInstanceRepositoryImpl(firebaseInstance)
+    fun provideFirebaseMessagingRepository(firebaseMessaging: FirebaseMessaging): FirebaseMessagingRepository {
+        return FirebaseMessagingRepositoryImpl(firebaseMessaging)
     }
 }

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.board.GetBoardsUseCase
-import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.firebase_instance.GetTokenUseCase
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.firebase_messaging.GetTokenUseCase
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.user.GetCurrentUserUseCase
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.user.UpdateUserUseCase
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.user_auth.GetCurrentUserIdUseCase

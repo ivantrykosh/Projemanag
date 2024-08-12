@@ -63,7 +63,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:19.2.0")
     implementation("com.google.firebase:firebase-firestore:21.4.0")
     implementation("com.google.firebase:firebase-storage:19.1.1")
-    implementation("com.google.firebase:firebase-messaging:20.1.1")
+    implementation("com.google.firebase:firebase-messaging:23.0.6")
 
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
