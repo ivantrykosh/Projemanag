@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -20,11 +18,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        val properties = Properties()
-        project.rootProject.file("local.properties").inputStream().use { properties.load(it) }
-
-        buildConfigField("String", "FCM_API_KEY", "\"${properties.getProperty("FCM_API_KEY")}\"")
     }
 
     buildTypes {
