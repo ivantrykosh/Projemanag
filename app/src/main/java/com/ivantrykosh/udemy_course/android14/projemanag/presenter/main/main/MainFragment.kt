@@ -1,6 +1,12 @@
 package com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.main
 
+import android.Manifest
+import android.app.AlertDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +14,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -47,6 +56,8 @@ class MainFragment : Fragment() {
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         true
     }
+
+    private val requestForNotifications = registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,6 +99,37 @@ class MainFragment : Fragment() {
         observeUpdateFCMTokenState()
         observeSignOutState()
         observeGetTokenState()
+
+        checkNotificationPermission()
+    }
+
+    private fun checkNotificationPermission() {
+        when {
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED -> { }
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                showRequestPermissionRationale()
+            }
+            else -> @RequiresApi(Build.VERSION_CODES.TIRAMISU) {
+                requestForNotifications.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
+    private fun showRequestPermissionRationale() {
+        AlertDialog.Builder(context)
+            .setTitle(R.string.notification_permission_is_denied)
+            .setMessage(R.string.please_allow_notifications_in_settings)
+            .setPositiveButton(R.string.ok) { _, _ ->
+                navigateToSettings()
+            }
+            .setNegativeButton(R.string.cancel) { _, _ -> }
+            .show()
+    }
+
+    private fun navigateToSettings() {
+        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context?.packageName)
+        startActivity(intent)
     }
 
     private fun observeGetCurrentUserState() {

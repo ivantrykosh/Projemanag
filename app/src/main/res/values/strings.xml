@@ -53,4 +53,7 @@
     <string name="confirmation_message_to_delete_card">Do you want to delete card %s?</string>
     <string name="str_select_label_color">Select Label Color</string>
     <string name="default_notification_channel_id">1</string>
+    <string name="notification_permission_is_denied">Notification permission is denied</string>
+    <string name="please_allow_notifications_in_settings">Please, allow notifications in app settings</string>
+    <string name="ok">OK</string>
 </resources>
