@@ -29,4 +29,9 @@ interface BoardRepository {
      * Assign members to board with corresponding id
      */
     suspend fun assignMembers(id: String, members: List<String>)
+
+    /**
+     * Delete board with corresponding id
+     */
+    suspend fun deleteBoard(id: String)
 }

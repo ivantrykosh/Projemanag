@@ -52,6 +52,11 @@ class BoardItemsAdapter(
         }
     }
 
+    fun removeAt(position: Int) {
+        list.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     interface OnClickListener {
         fun onClick(position: Int, model: Board)
     }

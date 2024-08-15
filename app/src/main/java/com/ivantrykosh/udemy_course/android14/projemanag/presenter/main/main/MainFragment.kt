@@ -20,7 +20,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.ivantrykosh.udemy_course.android14.projemanag.R
@@ -30,6 +32,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.MainActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.AppPreferences
+import com.ivantrykosh.udemy_course.android14.projemanag.utils.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -99,6 +102,7 @@ class MainFragment : Fragment() {
         observeUpdateFCMTokenState()
         observeSignOutState()
         observeGetTokenState()
+        observeDeleteBoardState()
 
         checkNotificationPermission()
     }
@@ -206,6 +210,21 @@ class MainFragment : Fragment() {
         }
     }
 
+    private fun observeDeleteBoardState() {
+        mainViewModel.deleteBoardState.observe(viewLifecycleOwner) { result ->
+            when {
+                result.loading -> { }
+                result.error.isNotEmpty() -> {
+                    mainActivity.hideProgressDialog()
+                    mainActivity.showErrorSnackBar(result.error)
+                }
+                else -> {
+                    mainViewModel.getBoards()
+                }
+            }
+        }
+    }
+
     private fun loadToken() {
         mainViewModel.getToken()
     }
@@ -247,6 +266,18 @@ class MainFragment : Fragment() {
                     findNavController().navigate(R.id.action_main_to_task_list, bundle)
                 }
             })
+
+            val deleteSwipeHandler = object : SwipeToDeleteCallback(requireContext()) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    mainActivity.showProgressDialog()
+                    mainViewModel.deleteBoard(boardList[viewHolder.adapterPosition].documentId)
+                    val boardsAdapter = binding.mainContent.rvBoardsList.adapter as BoardItemsAdapter
+                    boardsAdapter.removeAt(viewHolder.adapterPosition)
+                }
+            }
+
+            val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
+            deleteItemTouchHelper.attachToRecyclerView(binding.mainContent.rvBoardsList)
         } else {
             binding.mainContent.rvBoardsList.visibility = View.GONE
             binding.mainContent.tvNoBoardsAvailable.visibility = View.VISIBLE

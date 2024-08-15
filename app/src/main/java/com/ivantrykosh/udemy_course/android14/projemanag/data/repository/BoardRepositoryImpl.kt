@@ -32,4 +32,8 @@ class BoardRepositoryImpl @Inject constructor(
     override suspend fun assignMembers(id: String, members: List<String>) {
         firestoreBoard.assignMembers(id, members)
     }
+
+    override suspend fun deleteBoard(id: String) {
+        firestoreBoard.deleteBoard(id)
+    }
 }

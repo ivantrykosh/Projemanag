@@ -56,4 +56,11 @@ class FirestoreBoard {
             .update(assignedMembers)
             .await()
     }
+
+    suspend fun deleteBoard(id: String) {
+        mFirestore.collection(FirestoreCollections.BOARDS)
+            .document(id)
+            .delete()
+            .await()
+    }
 }

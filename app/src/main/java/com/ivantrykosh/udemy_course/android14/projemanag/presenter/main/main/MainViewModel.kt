@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Board
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
+import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.board.DeleteBoardUseCase
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.board.GetBoardsUseCase
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.firebase_messaging.GetTokenUseCase
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.user.GetCurrentUserUseCase
@@ -26,6 +27,7 @@ class MainViewModel @Inject constructor(
     private val updateUserUseCase: UpdateUserUseCase,
     private val signOutUseCase: SignOutUseCase,
     private val getTokenUseCase: GetTokenUseCase,
+    private val deleteBoardUseCase: DeleteBoardUseCase,
     getCurrentUserUseCase: GetCurrentUserUseCase,
     getCurrentUserIdUseCase: GetCurrentUserIdUseCase
 ): BaseViewModel(getCurrentUserUseCase, getCurrentUserIdUseCase) {
@@ -41,6 +43,9 @@ class MainViewModel @Inject constructor(
 
     private val _getTokenState = MutableLiveData<State<String>>()
     val getTokenState: LiveData<State<String>> = _getTokenState
+
+    private val _deleteBoardState = MutableLiveData<State<Unit>>()
+    val deleteBoardState: LiveData<State<Unit>> = _deleteBoardState
 
     fun getBoards() {
         getBoardsUseCase().onEach { result ->
@@ -86,6 +91,16 @@ class MainViewModel @Inject constructor(
                 is Resource.Success -> _getTokenState.value = State(data = result.data)
                 is Resource.Error -> _getTokenState.value = State(error = result.message)
                 is Resource.Loading -> _getTokenState.value = State(loading = true)
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun deleteBoard(boardId: String) {
+        deleteBoardUseCase(boardId).onEach { result ->
+            when (result) {
+                is Resource.Success -> _deleteBoardState.value = State(data = result.data)
+                is Resource.Error -> _deleteBoardState.value = State(error = result.message)
+                is Resource.Loading -> _deleteBoardState.value = State(loading = true)
             }
         }.launchIn(viewModelScope)
     }
