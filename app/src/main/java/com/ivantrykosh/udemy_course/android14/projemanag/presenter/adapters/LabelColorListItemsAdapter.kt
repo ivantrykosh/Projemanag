@@ -11,7 +11,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.R
 
 class LabelColorListItemsAdapter(
     private val context: Context,
-    private var list: ArrayList<String>,
+    private var list: List<String>,
     private val mSelectedColor: String
 ): RecyclerView.Adapter<LabelColorListItemsAdapter.ColorItemViewHolder>() {
 

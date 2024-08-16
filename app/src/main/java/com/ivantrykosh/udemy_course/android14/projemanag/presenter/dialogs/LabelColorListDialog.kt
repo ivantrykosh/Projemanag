@@ -13,7 +13,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.presenter.adapters.Labe
 
 abstract class LabelColorListDialog(
     context: Context,
-    private var list: ArrayList<String>,
+    private var list: List<String>,
     private val title: String = "",
     private var mSelectedColor: String = ""
 ): Dialog(context) {

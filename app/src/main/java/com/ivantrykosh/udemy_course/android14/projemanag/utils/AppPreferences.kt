@@ -5,10 +5,12 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 
 object AppPreferences {
+    private const val PREFS_NAME = "projemanag_prefs"
+
     private lateinit var sharedPreferences: SharedPreferences
 
     fun setup(context: Context) {
-        sharedPreferences = context.getSharedPreferences(Constants.PROJEMANAG, Context.MODE_PRIVATE)
+        sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
 
     fun clear() {

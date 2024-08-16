@@ -24,6 +24,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Card
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.SelectedMembers
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Task
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
+import com.ivantrykosh.udemy_course.android14.projemanag.presenter.adapters.MemberListItemsAdapter
 import com.ivantrykosh.udemy_course.android14.projemanag.presenter.main.MainActivity
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -184,8 +185,10 @@ class CardDetailsFragment : Fragment() {
     }
 
     private fun labelColorListDialog() {
-        val colorsList = ArrayList(colorsList())
-        val listDialog = object : LabelColorListDialog(requireContext(), colorsList, getString(R.string.str_select_label_color), mSelectedColor) {
+        val colors = resources.obtainTypedArray(R.array.label_colors).use { arr ->
+            IntArray(arr.length()) { arr.getColor(it, 0) }.map { "#%08X".format(it)  }
+        }
+        val listDialog = object : LabelColorListDialog(requireContext(), colors, getString(R.string.str_select_label_color), mSelectedColor) {
             override fun onItemSelected(color: String) {
                 mSelectedColor = color
                 setColor()
@@ -210,8 +213,8 @@ class CardDetailsFragment : Fragment() {
             }
         }
         val listDialog = object : MembersListDialog(requireContext(), mMembersDetailList, getString(R.string.select_members)) {
-            override fun onItemSelected(user: User, action: String) {
-                if (action == Constants.SELECT) {
+            override fun onItemSelected(user: User, action: MemberListItemsAdapter.OnClickListener.Action) {
+                if (action == MemberListItemsAdapter.OnClickListener.Action.SELECT) {
                     if (!mBoardDetails.taskList[mTaskListPosition].cards[mCardListPosition].assignedTo.contains(user.id)) {
                         mBoardDetails.taskList[mTaskListPosition].cards[mCardListPosition].assignedTo.add(user.id)
                     }
@@ -292,14 +295,6 @@ class CardDetailsFragment : Fragment() {
         mainActivity.showProgressDialog()
         cardDetailsViewModel.updateTasks(mBoardDetails.documentId, mBoardDetails.taskList)
     }
-
-    private fun colorsList() = listOf(
-        "#FFFFFF",
-        "#FFFF00",
-        "#FF00FF",
-        "#00FFFF",
-        "#000000",
-    )
 
     override fun onDestroyView() {
         super.onDestroyView()

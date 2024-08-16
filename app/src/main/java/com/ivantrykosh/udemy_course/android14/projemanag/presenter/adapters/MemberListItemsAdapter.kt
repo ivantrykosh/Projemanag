@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ivantrykosh.udemy_course.android14.projemanag.R
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
-import com.ivantrykosh.udemy_course.android14.projemanag.utils.Constants
 import de.hdodenhof.circleimageview.CircleImageView
 
 class MemberListItemsAdapter(
@@ -54,7 +53,7 @@ class MemberListItemsAdapter(
             holder.selectedMemberImage.visibility = View.GONE
         }
         holder.itemView.setOnClickListener {
-            val action = if (model.selected) Constants.UNSELECT else Constants.SELECT
+            val action = if (model.selected) OnClickListener.Action.SELECT else OnClickListener.Action.UNSELECT
             onClickListener?.onClick(position, model, action)
         }
     }
@@ -64,6 +63,11 @@ class MemberListItemsAdapter(
     }
 
     interface OnClickListener {
-        fun onClick(position: Int, user: User, action: String)
+        fun onClick(position: Int, user: User, action: Action)
+
+        enum class Action {
+            SELECT,
+            UNSELECT
+        }
     }
 }

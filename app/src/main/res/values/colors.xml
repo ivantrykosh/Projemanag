@@ -22,4 +22,16 @@
 
     <color name="task_list_action_color">#F7F6FA</color>
     <color name="task_list_title_view_bg_color">#F8F8F8</color>
+
+    <color name="magenta">#FFFF00FF</color>
+    <color name="aqua">#FF00FFFF</color>
+    <color name="yellow">#FFFFFF00</color>
+
+    <array name="label_colors">
+        <item>@color/white</item>
+        <item>@color/magenta</item>
+        <item>@color/aqua</item>
+        <item>@color/yellow</item>
+        <item>@color/black</item>
+    </array>
 </resources>
