@@ -3,8 +3,7 @@ package com.ivantrykosh.udemy_course.android14.projemanag.data.remote.firebase
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 
-class FirebaseAuth {
-    private val mFirebaseAuth = FirebaseAuth.getInstance()
+class FirebaseAuth(private val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()) {
 
     fun getCurrentUserId(): String {
         return mFirebaseAuth.currentUser?.uid ?: ""

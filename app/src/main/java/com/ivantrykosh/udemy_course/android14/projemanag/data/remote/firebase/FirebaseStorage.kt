@@ -4,8 +4,7 @@ import android.net.Uri
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 
-class FirebaseStorage {
-    private val mFirebaseStorage = FirebaseStorage.getInstance()
+class FirebaseStorage(private val mFirebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()) {
 
     suspend fun uploadImage(newName: String, imageUri: Uri): String {
         val ref = mFirebaseStorage.reference.child(newName)

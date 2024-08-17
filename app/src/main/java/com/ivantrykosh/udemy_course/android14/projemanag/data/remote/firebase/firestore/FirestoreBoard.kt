@@ -7,8 +7,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.Task
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.FirestoreCollections
 import kotlinx.coroutines.tasks.await
 
-class FirestoreBoard {
-    private val mFirestore = FirebaseFirestore.getInstance()
+class FirestoreBoard(private val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()) {
 
     suspend fun createBoard(board: Board) {
         mFirestore.collection(FirestoreCollections.BOARDS)
