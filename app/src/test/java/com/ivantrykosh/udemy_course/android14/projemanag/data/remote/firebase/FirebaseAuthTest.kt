@@ -28,7 +28,7 @@ class FirebaseAuthTest {
     }
 
     @Test
-    fun getCurrentUserId_userLoggedIn_returnUserId() {
+    fun getCurrentUserId_userLoggedIn_success() {
         val userId = "userid123"
 
         mock<FirebaseUser> {
@@ -40,7 +40,7 @@ class FirebaseAuthTest {
     }
 
     @Test
-    fun getCurrentUserId_userNotLoggedIn() {
+    fun getCurrentUserId_userNotLoggedIn_success() {
         mock<FirebaseUser> {
             on { mockFirebaseAuth.currentUser } doReturn null
         }
@@ -49,7 +49,7 @@ class FirebaseAuthTest {
     }
 
     @Test
-    fun signOut() {
+    fun signOut_success() {
         auth.signOut()
         verify(mockFirebaseAuth).signOut()
     }

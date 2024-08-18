@@ -6,8 +6,7 @@ import com.ivantrykosh.udemy_course.android14.projemanag.domain.model.User
 import com.ivantrykosh.udemy_course.android14.projemanag.utils.FirestoreCollections
 import kotlinx.coroutines.tasks.await
 
-class FirestoreUser {
-    private val mFirestore = FirebaseFirestore.getInstance()
+class FirestoreUser(private val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()) {
 
     suspend fun createUser(user: User, userId: String) {
         mFirestore.collection(FirestoreCollections.USERS)
