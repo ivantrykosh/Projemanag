@@ -86,6 +86,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
     testImplementation("org.mockito:mockito-core:3.4.0")
+    testImplementation("org.mockito:mockito-inline:4.5.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:3.0.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0-RC.2")
 }
