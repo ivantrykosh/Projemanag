@@ -3,12 +3,16 @@ package com.ivantrykosh.udemy_course.android14.projemanag.domain.use_case.user_a
 import com.ivantrykosh.udemy_course.android14.projemanag.domain.repository.UserAuthRepository
 
 object UserAuthRepositoryImpl : UserAuthRepository {
+    var currentUserId = "testUserId"
+    val testEmail = "test@email.com"
+    val testPassword = "test@Passw0rd"
+
     override suspend fun getCurrentUserId(): String {
-        TODO("Not yet implemented")
+        return currentUserId
     }
 
     override suspend fun signOut() {
-        TODO("Not yet implemented")
+        currentUserId = ""
     }
 
     override suspend fun createUser(email: String, password: String) {
@@ -20,6 +24,10 @@ object UserAuthRepositoryImpl : UserAuthRepository {
     }
 
     override suspend fun signIn(email: String, password: String) {
-        TODO("Not yet implemented")
+        if (email != testEmail) {
+            throw Exception("Email of user is incorrect")
+        } else if (password != testPassword) {
+            throw Exception("Password is incorrect")
+        }
     }
 }
