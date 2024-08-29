@@ -98,7 +98,7 @@ class MainViewModel @Inject constructor(
     fun deleteBoard(boardId: String) {
         deleteBoardUseCase(boardId).onEach { result ->
             when (result) {
-                is Resource.Success -> _deleteBoardState.value = State(data = result.data)
+                is Resource.Success -> _deleteBoardState.value = State()
                 is Resource.Error -> _deleteBoardState.value = State(error = result.message)
                 is Resource.Loading -> _deleteBoardState.value = State(loading = true)
             }

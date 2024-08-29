@@ -28,8 +28,8 @@ class CreateBoardViewModel @Inject constructor(
     private val _uploadImageState = MutableLiveData<State<String>>()
     val uploadImageState: LiveData<State<String>> = _uploadImageState
 
-    private val _createBoardState = MutableLiveData<State<String>>()
-    val createBoardState: LiveData<State<String>> = _createBoardState
+    private val _createBoardState = MutableLiveData<State<Unit>>()
+    val createBoardState: LiveData<State<Unit>> = _createBoardState
 
     fun uploadImage(newName: String, imageUri: Uri) {
         uploadImageUseCase(newName, imageUri).onEach { result ->
